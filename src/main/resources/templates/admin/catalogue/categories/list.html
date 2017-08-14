@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<title>Manage Categories</title>
+<base
+	th:href="${@environment.getProperty('layout.thymleaf.admin.head.base.href')}" />
+<meta
+	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+	name='viewport'>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<!-- global css -->
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<!-- font Awesome -->
+<link href="vendors/font-awesome-4.2.0/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
+<link href="css/styles/black.css" rel="stylesheet" type="text/css"
+	id="colorscheme" />
+<link href="css/panel.css" rel="stylesheet" type="text/css" />
+<link href="css/metisMenu.css" rel="stylesheet" type="text/css" />
+<!-- end of global css -->
+<!--page level css -->
+<link href="vendors/fullcalendar/css/fullcalendar.css" rel="stylesheet"
+	type="text/css" />
+<link href="css/pages/calendar_custom.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" media="all"
+	href="vendors/jvectormap/jquery-jvectormap.css" />
+<link href="css/text.css" rel="stylesheet">
+<!--end of page level css-->
+</head>
+
+<body class="skin-josh">
+	<header class="header" th:replace="admin/layout/header :: header"></header>
+	<div class="wrapper row-offcanvas row-offcanvas-left">
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside class="left-side sidebar-offcanvas"
+			th:replace="admin/layout/_leftsidebar :: left(active='catalog',subactive='categories')">
+		</aside>
+
+		<!-- Right side column. Contains the navbar and content of the page -->
+		<aside class="right-side">
+			<section class="content-header">
+				
+				<h1>Manage Categories</h1>
+		
+			</section>
+								  <!-- /* Handle the flash message */-->
+									    <th:block th:if="${message != null}">
+									        <!-- /* The message code is returned from the @Controller */ -->
+									        <div th:replace="admin/layout/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>
+									    </th:block>
+									      <!-- /* end Handle the flash message */-->		
+		
+			<section class="content">
+				<div class="row">
+									<div class="col-md-12" style="padding-bottom:10px;">
+						<a th:href="@{/admin/categories/createCategory}" class="btn btn-primary"><span
+							class="glyphicon glyphicon-plus"></span> Add new</a> 
+							<a href="#"
+							class="btn btn-primary"><span
+							class="glyphicon glyphicon-plus"></span> Add new</a>
+
+						<div class="btn-group">
+							<button type="button" class="btn btn-success">
+								<i class="fa fa-download"></i> Export
+							</button>
+							<button type="button" class="btn btn-success dropdown-toggle"
+								data-toggle="dropdown" aria-expanded="false">
+								<span class="caret"></span> <span class="sr-only">&nbsp;</span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<button type="submit" name="exportxml-all">
+										<i class="fa fa-file-code-o"></i> Export to XML (all found)
+									</button>
+								</li>
+								<li>
+									<button type="button" id="exportxml-selected">
+										<i class="fa fa-file-code-o"></i> Export to XML (selected)
+									</button>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<button type="submit" name="exportexcel-all">
+										<i class="fa fa-file-excel-o"></i> Export to Excel (all found)
+									</button>
+								</li>
+								<li>
+									<button type="button" id="exportexcel-selected">
+										<i class="fa fa-file-excel-o"></i> Export to Excel (selected)
+									</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+				
+				
+				
+				
+					<div class="col-md-12">
+						<div class="panel panel-white">
+							
+							<div class="panel-body">
+								<form class="form-horizontal">
+			
+										<!-- Text input-->
+										<div class="form-group">
+										  <label class="col-md-4 control-label" for="name">Category name</label>  
+										  <div class="col-md-4">
+										  <input id="name" name="name" type="text" placeholder="" class="form-control input-md">
+										    
+										  </div>
+										</div>
+										
+										<!-- Button -->
+										<div class="form-group">
+										  <label class="col-md-4 control-label" for=""></label>
+										  <div class="col-md-4">
+										    <button type="submit" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
+										  </div>
+										</div>
+										</form>
+
+							</div>
+						</div>
+					</div>
+
+
+
+
+
+
+					<div class="col-md-12">
+						<div class="panel panel-white">
+							<div class="panel-heading border-light">
+								<a href="#" class="btn btn-primary"><span
+									class="glyphicon glyphicon-plus"></span> Add new</a> <a href="#"
+									class="btn btn-primary"><span
+									class="glyphicon glyphicon-plus"></span> Add new</a> <a href="#"
+									class="btn btn-primary"><span
+									class="glyphicon glyphicon-plus"></span> Add new</a>
+								<div class="button-dropdown" data-buttons="dropdown">
+									<a href="#" class="button "> button <i
+										class="fa fa-caret-down"></i>
+									</a>
+									<ul class="button-dropdown-menu-below">
+										<li><a href="#">Option 1</a></li>
+										<li><a href="#">Option 2</a></li>
+										<li class="button-dropdown-divider"><a href="#">Option
+												3</a></li>
+									</ul>
+								</div>
+								<div class="dropdown">
+									<button class="btn btn-primary dropdown-toggle" type="button"
+										data-toggle="dropdown">
+										Dropdown Example <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a href="#">HTML</a></li>
+										<li><a href="#">CSS</a></li>
+										<li><a href="#">JavaScript</a></li>
+									</ul>
+								</div>
+								<h3 class="panel-title"></h3>
+
+							</div>
+							<div class="panel-body">
+
+								<a href="#" class="btn btn-primary"><span
+									class="glyphicon glyphicon-plus"></span> Add new</a> <a href="#"
+									class="btn btn-primary"><span
+									class="glyphicon glyphicon-plus"></span> Add new</a> <a href="#"
+									class="btn btn-primary"><span
+									class="glyphicon glyphicon-plus"></span> Add new</a>
+								<div class="dropdown">
+									<button class="btn btn-primary dropdown-toggle" type="button"
+										data-toggle="dropdown">
+										Dropdown Example <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<li><a href="#">HTML</a></li>
+										<li><a href="#">CSS</a></li>
+										<li><a href="#">JavaScript</a></li>
+									</ul>
+								</div>
+
+								<p>There are many variations of passages of Lorem Ipsum
+									available, but the majority have suffered alteration in some
+									form, by injected humour, or randomised words which don't look
+									even slightly believable. If you are going to use a passage of
+									Lorem Ipsum, you need to be sure there isn't anything
+									embarrassing hidden in the middle of text.</p>
+								<p>Lorem Ipsum is simply dummy text of the printing and
+									typesetting industry. Lorem Ipsum has been the industry's
+									standard dummy text ever since the 1500s, when an unknown
+									printer took a galley of type and scrambled it to make a type
+									specimen book. It has survived not only five centuries, but
+									also the leap into electronic typesetting, remaining
+									essentially unchanged. It was popularised in the 1960s with the
+									release of Letraset sheets containing Lorem Ipsum passages, and
+									more recently with desktop publishing software like Aldus
+									PageMaker including versions of Lorem Ipsum.</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!--/row-->
+
+			</section>
+		</aside>
+		<!-- right-side -->
+	</div>
+
+
+	<div id="footer_global"
+		th:replace="admin/layout/footer :: footer_global"></div>
+	<!-- begining of page level js -->
+	<!--  todolist-->
+	<script type="text/javascript"></script>
+	
+
+	<!-- end of page level js -->
+
+</body>
+</html>
