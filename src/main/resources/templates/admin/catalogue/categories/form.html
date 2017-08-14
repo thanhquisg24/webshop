@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html >
 <head>
 <meta charset="UTF-8">
 <base href="/">
@@ -58,7 +58,10 @@
 			</section>
 			<section class="content">
 				<div class="row">
-				<form  novalidate="novalidate" th:action="@{admin/categories/save}" th:object="${category}" >
+
+				<form  novalidate="novalidate" th:action="@{admin/categories/save}" th:object="${category}" method="post">
+				 <input type="hidden"   th:field="*{id}">
+				 			
 					<div class="col-md-12" style="padding-bottom: 10px;">
 						<button type="submit"
 							class="btn btn-primary">
@@ -78,9 +81,9 @@
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="name">Name</label>
 											<div class="col-md-8">
-												<input id="name" name="name" type="text" placeholder=""
-													class="form-control input-md" required=""> <span
-													class="help-block text-red">help</span>
+												<input th:field="*{name}"
+													class="form-control input-md" required="">
+												<span  th:if="${#fields.hasErrors('name')}"  th:errors="*{name}"  class="help-block text-red">314234</span>
 											</div>
 										</div>
 
@@ -88,8 +91,7 @@
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="description">Description</label>
 											<div class="col-md-8">
-												<textarea class="form-control" id="description"
-													name="description"></textarea>
+												<textarea class="form-control" th:field="*{description}"></textarea>
 											</div>
 										</div>
 
@@ -117,26 +119,29 @@
 											<label class="col-md-4 control-label" for="parent_id">Parent
 												category</label>
 											<div class="col-md-4">
-												<select id="parent_id" name="parent_id" class="form-control">
-													<option value="1">Option one</option>
-													<option value="2">Option two</option>
+												<select th:field="*{parent.id}" class="form-control">
+													<option value="-1">[None]</option>
+													 <option th:each="cat : ${categories}" 
+											          th:value="${cat.id}" 
+											          th:text="${cat.name}"
+											          th:disabled="${cat.Active}==false">Wireframe</option>
 												</select>
 											</div>
 										</div>
 
 											<!-- Text input-->
 										<div class="form-group">
-											<label class="col-md-4 control-label" for="name">Css Class</label>
+											<label class="col-md-4 control-label" for="">Css Class</label>
 											<div class="col-md-4">
-												<input id="name" name="name" type="text" placeholder=""
+												<input  type="text" th:field="*{cssclass}"
 													class="form-control input-md" > 
 											</div>
 										</div>
 										<!-- Text input-->
 										<div class="form-group">
-											<label class="col-md-4 control-label" for="name">Icon</label>
+											<label class="col-md-4 control-label" for="">Icon</label>
 											<div class="col-md-4">
-												<input id="name" name="name" type="text" placeholder=""
+												<input  th:field="*{icon}" type="text" placeholder=""
 													class="form-control input-md" >
 											</div>
 										</div>
@@ -146,8 +151,7 @@
 												on home page</label>
 											<div class="col-md-4">
 												<label class="checkbox-inline" for="checkboxes-0"> <input
-													type="checkbox" name="checkboxes" id="checkboxes-0"
-													value="1"> &nbsp;
+													type="checkbox"  th:field="*{ShowOnHomePage}" value="true"> &nbsp;
 												</label>
 											</div>
 										</div>
@@ -158,7 +162,7 @@
 												in top menu </label>
 											<div class="col-md-4">
 												<label class="checkbox-inline" for="checkboxes-0"> <input
-													type="checkbox" name="checkboxes" id="checkboxes-0"
+													type="checkbox"  th:field="*{IncludeInTopMenu}"
 													value="1"> &nbsp;
 												</label>
 											</div>
@@ -169,7 +173,7 @@
 											<label class="col-md-4 control-label" for="checkboxes">Published</label>
 											<div class="col-md-4">
 												<label class="checkbox-inline" for="checkboxes-0"> <input
-													type="checkbox" name="checkboxes" id="checkboxes-0"
+													type="checkbox" th:field="*{Active}"
 													value="1"> &nbsp;
 												</label>
 											</div>
@@ -180,7 +184,7 @@
 											<label class="col-md-4 control-label" for="sort_order">Display
 												order</label>
 											<div class="col-md-4">
-												<input id="sort_order" name="sort_order" type="number" 
+												<input id="sort_order"  th:field="*{sortOrder}" type="number" 
 													 class="form-control input-sm">
 
 											</div>
@@ -204,22 +208,22 @@
 								    <div class="col-md-12" style="display: block;">
 								        <div class="form-group" style="position: static;">
 								            <label for="input-text-1">URL</label>
-								            <input type="text" class="form-control" id="input-text-1" >
+								            <input type="text" class="form-control"  th:field="*{seoUrl}" >
 							
 								        </div>
 								        <div class="form-group" style="position: static;">
 								            <label for="input-text-2">Meta Title</label>
-								            <input type="text" class="form-control" id="input-text-2">
+								            <input type="text" class="form-control"  th:field="*{metatagTitle}">
 					
 								        </div>
 								        <div class="form-group" style="position: static;">
 								            <label for="input-text-3">Meta keyword</label>
-								            <input type="text" class="form-control" id="input-text-3" >
+								            <input type="text" class="form-control"   th:field="*{metatagKeywords}" >
 								
 								        </div>
 								        <div class="form-group" style="position: static;">
 								            <label for="input-text-4">Meta Description</label>
-								        	<textarea class="form-control" id="meta_description" name="meta_description"></textarea>
+								        	<textarea class="form-control"   th:field="*{metatagDescription}"></textarea>
 								        </div>
 								    </div>
 								</div>

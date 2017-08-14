@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+	<base th:href="${@environment.getProperty('layout.thymleaf.admin.head.base.href')}" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Spring MyContact</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="font-end/vendor/bootstrap/css/bootstrap.min.css"  th:href="@{/font-end/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Theme CSS -->
+    <link href="font-end/css/agency.css" th:href="@{/font-end/css/agency.css}" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	var baseurl= /*[[${@environment.getProperty('layout.thymleaf.script.base.href')}]]*/;
+	function validate() {
+        if (document.f.username.value == "" && document.f.password.value == "") {
+            alert(/*[[#{message.username} + #{message.password}]]*/);
+            document.f.username.focus();
+            return false;
+        }
+        if (document.f.username.value == "") {
+            alert(/*[[#{message.username}]]*/);
+            document.f.username.focus();
+            return false;
+        }
+        if (document.f.password.value == "") {
+            alert(/*[[#{message.password}]]*/);
+            document.f.password.focus();
+            return false;
+        }
+    }
+	/*]]>*/ 
+	</script>
+</head>
+
+<body id="page-top" class="index">
+
+    <!-- Navigation -->
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top" th:replace="font-end/layout :: nav('login')"> </nav>
+
+    <section >
+        <div class="container inner-bg">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <div class="form-box">
+                                <div class="form-top">
+                                    <div class="form-top-left">
+                                        <h3>Đăng nhập</h3>
+                                        <p>Điền email và mật khẩu của bạn:</p>
+                                    </div>
+                                    <div class="form-top-right">
+                                        <i class="fa fa-lock"></i>
+                                    </div>
+                                </div>
+                                <div class="form-bottom">
+                                <div th:if="${param.message != null}" class="alert alert-info" th:text="${param.message[0]}">message</div>
+                                <div th:if="${param.error != null}" class="alert alert-danger" th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]}">error</div>
+                                    <form role="form" class="login-form" action="login" method='POST' onsubmit="return validate();">
+                                        <div class="form-group">
+                                            <label class="sr-only" for="form-username">Email</label>
+                                            <input name="username" placeholder="Email..." class="form-username form-control" type="text">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="sr-only" for="form-password">Mật khẩu</label>
+                                            <input name="password" placeholder="Mật khẩu..." class="form-password form-control" type="password">
+                                        </div>
+                                        <div class="form-group" style="font-weight:bold;text-align:right">
+                                           <a th:href="@{/forgetPassword.html}"  >Bạn đã quên mật khẩu?</a>
+                                        </div>
+                                        <button type="submit" class="btn">Đăng nhập!</button>
+                                    </form>
+                                </div>
+                            </div>
+                        
+                            
+                            
+                        </div>
+                    </div>
+                    
+          
+        </div>
+    </section>
+
+
+
+    <!-- jQuery -->
+    <script src="font-end/vendor/jquery/jquery.min.js" th:src="@{/font-end/vendor/jquery/jquery.min.js}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="font-end/vendor/bootstrap/js/bootstrap.min.js" th:src="@{/font-end/vendor/bootstrap/js/bootstrap.min.js}"></script>
+
+
+
+
+
+</body>
+
+</html>
