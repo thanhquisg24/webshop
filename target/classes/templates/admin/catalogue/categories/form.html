@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<title>Manage Categories - Add new / Update</title>
+<base
+	th:href="${@environment.getProperty('layout.thymleaf.admin.head.base.href')}" />
+<meta
+	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+	name='viewport'>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<!-- global css -->
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<!-- font Awesome -->
+<link href="vendors/font-awesome-4.2.0/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
+<link href="css/styles/black.css" rel="stylesheet" type="text/css"
+	id="colorscheme" />
+<link href="css/panel.css" rel="stylesheet" type="text/css" />
+<link href="css/metisMenu.css" rel="stylesheet" type="text/css" />
+<!-- end of global css -->
+<!--page level css -->
+<link href="vendors/fullcalendar/css/fullcalendar.css" rel="stylesheet"
+	type="text/css" />
+<link href="css/pages/calendar_custom.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" media="all"
+	href="vendors/jvectormap/jquery-jvectormap.css" />
+
+<link href="vendors/jasny-bootstrap/css/jasny-bootstrap.css" rel="stylesheet">
+<link href="css/text.css" rel="stylesheet">
+<!--end of page level css-->
+</head>
+
+<body class="skin-josh">
+	<header class="header" th:replace="admin/layout/header :: header"></header>
+	<div class="wrapper row-offcanvas row-offcanvas-left">
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside class="left-side sidebar-offcanvas"
+			th:replace="admin/layout/_leftsidebar :: left(active='catalog',subactive='categories')">
+		</aside>
+
+		<!-- Right side column. Contains the navbar and content of the page -->
+		<aside class="right-side">
+			<section class="content-header">
+				<h1>
+					Add a new category <small><i
+						class="fa fa-arrow-circle-left"></i><a
+						th:href="@{/admin/categories/}">back to category list</a></small>
+				</h1>
+
+			</section>
+			<section class="content">
+				<div class="row">
+				<form  novalidate="novalidate" th:action="@{admin/categories/save}" th:object="${category}" >
+					<div class="col-md-12" style="padding-bottom: 10px;">
+						<button type="submit"
+							class="btn btn-primary">
+							<i class="fa fa-floppy-o"></i> Save
+						</button>
+					</div>
+					<div class="col-md-8">
+						<div class="panel panel-white">
+							<div class="panel-heading border-light">
+								<h4 class="panel-title">Category info</h4>
+
+							</div>
+							<div class="panel-body">
+							
+									<fieldset class="form-horizontal">
+										<!-- Text input-->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="name">Name</label>
+											<div class="col-md-8">
+												<input id="name" name="name" type="text" placeholder=""
+													class="form-control input-md" required=""> <span
+													class="help-block text-red">help</span>
+											</div>
+										</div>
+
+										<!-- Textarea -->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="description">Description</label>
+											<div class="col-md-8">
+												<textarea class="form-control" id="description"
+													name="description"></textarea>
+											</div>
+										</div>
+
+										<!-- File Button -->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="filebutton">Picture</label>
+											<div class="col-md-4">
+													<div class="fileinput fileinput-new" data-provides="fileinput">
+			                                            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+			                                               		 <img data-src="holder.js/100%x100%" alt="..."></div>
+			                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+			                                            <div>
+			                                                <span class="btn btn-default btn-file">
+			                                                    <span class="fileinput-new">Select image</span>
+			                                                    <span class="fileinput-exists">Change</span>
+			                                                    <input type="file" name="fileupload"></span>
+			                                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+			                                            </div>
+			                                        </div>
+											</div>
+										</div>
+
+										<!-- Select Basic -->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="parent_id">Parent
+												category</label>
+											<div class="col-md-4">
+												<select id="parent_id" name="parent_id" class="form-control">
+													<option value="1">Option one</option>
+													<option value="2">Option two</option>
+												</select>
+											</div>
+										</div>
+
+											<!-- Text input-->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="name">Css Class</label>
+											<div class="col-md-4">
+												<input id="name" name="name" type="text" placeholder=""
+													class="form-control input-md" > 
+											</div>
+										</div>
+										<!-- Text input-->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="name">Icon</label>
+											<div class="col-md-4">
+												<input id="name" name="name" type="text" placeholder=""
+													class="form-control input-md" >
+											</div>
+										</div>
+										<!-- Multiple Checkboxes (inline) -->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="checkboxes">Show
+												on home page</label>
+											<div class="col-md-4">
+												<label class="checkbox-inline" for="checkboxes-0"> <input
+													type="checkbox" name="checkboxes" id="checkboxes-0"
+													value="1"> &nbsp;
+												</label>
+											</div>
+										</div>
+
+										<!-- Multiple Checkboxes (inline) -->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="checkboxes">Include
+												in top menu </label>
+											<div class="col-md-4">
+												<label class="checkbox-inline" for="checkboxes-0"> <input
+													type="checkbox" name="checkboxes" id="checkboxes-0"
+													value="1"> &nbsp;
+												</label>
+											</div>
+										</div>
+
+										<!-- Multiple Checkboxes (inline) -->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="checkboxes">Published</label>
+											<div class="col-md-4">
+												<label class="checkbox-inline" for="checkboxes-0"> <input
+													type="checkbox" name="checkboxes" id="checkboxes-0"
+													value="1"> &nbsp;
+												</label>
+											</div>
+										</div>
+
+										<!-- Text input-->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="sort_order">Display
+												order</label>
+											<div class="col-md-4">
+												<input id="sort_order" name="sort_order" type="number" 
+													 class="form-control input-sm">
+
+											</div>
+										</div>
+
+									</fieldset>
+								
+
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="panel panel-white">
+							<div class="panel-heading border-light">
+								<h4 class="panel-title">SEO</h4>
+
+							</div>
+							<div class="panel-body">
+								<div class="row">
+								    <div class="col-md-12" style="display: block;">
+								        <div class="form-group" style="position: static;">
+								            <label for="input-text-1">URL</label>
+								            <input type="text" class="form-control" id="input-text-1" >
+							
+								        </div>
+								        <div class="form-group" style="position: static;">
+								            <label for="input-text-2">Meta Title</label>
+								            <input type="text" class="form-control" id="input-text-2">
+					
+								        </div>
+								        <div class="form-group" style="position: static;">
+								            <label for="input-text-3">Meta keyword</label>
+								            <input type="text" class="form-control" id="input-text-3" >
+								
+								        </div>
+								        <div class="form-group" style="position: static;">
+								            <label for="input-text-4">Meta Description</label>
+								        	<textarea class="form-control" id="meta_description" name="meta_description"></textarea>
+								        </div>
+								    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					</form>
+				</div>
+				<!--/row-->
+
+			</section>
+		</aside>
+		<!-- right-side -->
+	</div>
+	<div id="footer_global"
+		th:replace="admin/layout/footer :: footer_global"></div>
+	<!-- begining of page level js -->
+	<!--  todolist-->
+	<script src="vendors/jasny-bootstrap/js/jasny-bootstrap.js"></script>
+	<script type="text/javascript"></script>
+
+
+	<!-- end of page level js -->
+
+</body>
+</html>
