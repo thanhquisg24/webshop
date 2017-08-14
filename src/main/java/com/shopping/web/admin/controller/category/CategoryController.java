@@ -1,6 +1,7 @@
-package com.shopping.admin.controller.category;
+package com.shopping.web.admin.controller.category;
 
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import com.shopping.core.business.exception.ServiceException;
 import com.shopping.core.business.services.catalog.category.CategoryService;
 import com.shopping.core.model.catalog.category.Category;
 import com.shopping.web.support.MessageHelper;
+import com.shopping.web.support.UserSessionHelper;
 
 
 
@@ -70,7 +72,9 @@ public class CategoryController {
 	
 	//@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/categories/save", method=RequestMethod.POST)
-	public String saveCategory(@Valid @ModelAttribute("category") Category category, RedirectAttributes ra, BindingResult result, Model model, HttpServletRequest request) throws Exception {
+	public String saveCategory(@Valid @ModelAttribute("category")  Category category, BindingResult result, Model model,
+			RedirectAttributes ra, HttpServletRequest request,Principal principal)  throws Exception {
+
 		if(category.getId() != null && category.getId() >0) { //edit entry
 			
 			//get from DB
@@ -82,6 +86,9 @@ public class CategoryController {
 
 		}
 		if (result.hasErrors()) {
+		
+			System.out.println(result.getAllErrors().toString());
+			
 			return "admin/catalogue/categories/form";
 		}
 		//check parent
@@ -92,7 +99,7 @@ public class CategoryController {
 				category.setDepth(0);
 			}
 		}
-		category.getAuditSection().setModifiedBy(request.getRemoteUser());
+		category.getAuditSection().setModifiedBy(UserSessionHelper.getPrincipalName(principal));
 		try{
 			categoryService.saveOrUpdate(category);
 			MessageHelper.addSuccessAttribute(ra, "save.success");

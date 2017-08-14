@@ -1,4 +1,4 @@
-package com.shopping.admin.controller.dashboard;
+package com.shopping.web.admin.controller.dashboard;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

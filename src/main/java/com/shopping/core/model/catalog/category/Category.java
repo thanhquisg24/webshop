@@ -91,15 +91,15 @@ public class Category extends SalesManagerEntity<Integer, Category> implements A
 	private AuditSection auditSection = new AuditSection();
 	
 	@Column(name = "ISACTIVE")
-	private boolean isActive = true;
+	private boolean Active = true;
 
 	
 	@Column(name = "SHOW_ON_HOME_PAGE")
-	private boolean isShowOnHomePage = true;
+	private boolean ShowOnHomePage = true;
 	
 
 	@Column(name = "INCLUDE_IN_TOP_MENU")
-	private boolean isIncludeInTopMenu = true;
+	private boolean IncludeInTopMenu = true;
 
 	public String getName() {
 		return name;
@@ -185,14 +185,7 @@ public class Category extends SalesManagerEntity<Integer, Category> implements A
 		this.auditSection = auditSection;
 	}
 
-	public boolean isActive() {
-		return isActive;
-	}
 
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
-	
 
 	public String getLineage() {
 		return lineage;
@@ -231,20 +224,31 @@ public class Category extends SalesManagerEntity<Integer, Category> implements A
 	
 	
 
-	public boolean isShowOnHomePage() {
-		return isShowOnHomePage;
+
+	
+
+	public boolean isActive() {
+		return Active;
 	}
 
-	public void setShowOnHomePage(boolean isShowOnHomePage) {
-		this.isShowOnHomePage = isShowOnHomePage;
+	public void setActive(boolean active) {
+		Active = active;
+	}
+
+	public boolean isShowOnHomePage() {
+		return ShowOnHomePage;
+	}
+
+	public void setShowOnHomePage(boolean showOnHomePage) {
+		ShowOnHomePage = showOnHomePage;
 	}
 
 	public boolean isIncludeInTopMenu() {
-		return isIncludeInTopMenu;
+		return IncludeInTopMenu;
 	}
 
-	public void setIncludeInTopMenu(boolean isIncludeInTopMenu) {
-		this.isIncludeInTopMenu = isIncludeInTopMenu;
+	public void setIncludeInTopMenu(boolean includeInTopMenu) {
+		IncludeInTopMenu = includeInTopMenu;
 	}
 
 	@Override
