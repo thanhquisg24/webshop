@@ -119,7 +119,7 @@
 											<label class="col-md-4 control-label" for="parent_id">Parent
 												category</label>
 											<div class="col-md-4">
-												<select th:field="*{parent.id}" class="form-control">
+												<select th:field="*{parent.id}" class="form-control"  th:disabled="*{depth} == 0">
 													<option value="-1">[None]</option>
 													 <option th:each="cat : ${categories}" 
 											          th:value="${cat.id}" 

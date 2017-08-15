@@ -2,6 +2,10 @@ package com.shopping.core.business.services.catalog.category;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specifications;
+
 import com.shopping.core.business.exception.ServiceException;
 import com.shopping.core.model.catalog.category.Category;
 
@@ -58,6 +62,10 @@ public interface CategoryService  {
 
 	List<Category> listAll() throws ServiceException;
 
+	 List<Category> findAllRoot();
 
+
+
+	Page<Category> findAll(String searchName, Pageable pageRequest);
 
 }

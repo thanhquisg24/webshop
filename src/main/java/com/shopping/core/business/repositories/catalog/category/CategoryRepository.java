@@ -2,8 +2,11 @@ package com.shopping.core.business.repositories.catalog.category;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.shopping.core.model.catalog.category.Category;
 
@@ -49,8 +52,11 @@ public interface CategoryRepository extends JpaRepository<Category, Integer>, Ca
 	@Query("select distinct c from Category c left join fetch c.parent cp where cp.id=?1  order by c.lineage, c.sortOrder asc")
 	public List<Category> findByParent(Integer parentId);
 	
-	@Query("select distinct c from Category c  order by c.lineage, c.sortOrder asc")
-	public List<Category> findAll();
+	@Query("select distinct c from Category c where c.name like %:searchName%")
+	public Page<Category> findAlldistinct(@Param("searchName") String searchName, Pageable pageRequest);
+	
+	@Query("select distinct c from Category c  where  c.depth=0 order by c.lineage, c.sortOrder asc")
+	public List<Category> findAllRoot();
 
 
 	

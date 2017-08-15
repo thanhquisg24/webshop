@@ -21,6 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shopping.core.model.common.audit.AuditSection;
 import com.shopping.core.model.common.audit.Auditable;
 import com.shopping.core.model.generic.SalesManagerEntity;
@@ -29,6 +30,7 @@ import com.shopping.core.model.generic.SalesManagerEntity;
 @Entity
 @EntityListeners(value = com.shopping.core.model.common.audit.AuditListener.class)
 @Table(name="Category")
+@JsonIgnoreProperties({"categories"})
 public class Category extends SalesManagerEntity<Integer, Category> implements Auditable {
 	/**
 	 * 
@@ -70,6 +72,10 @@ public class Category extends SalesManagerEntity<Integer, Category> implements A
 	@Column(name = "LINEAGE")
 	private String lineage;
 	
+	
+	@Column(name = "BREADCRUMB")
+	private String breadcrumb;
+	
 	@Column(name = "ICON")
 	private String icon;
 	
@@ -84,6 +90,8 @@ public class Category extends SalesManagerEntity<Integer, Category> implements A
 	@JoinColumn(name = "PARENT_ID")
 	private Category parent;
 
+	
+	
 	@OneToMany(mappedBy = "parent", cascade = CascadeType.REMOVE, orphanRemoval = true)
 	private List<Category> categories = new ArrayList<Category>();
 
@@ -251,6 +259,16 @@ public class Category extends SalesManagerEntity<Integer, Category> implements A
 		IncludeInTopMenu = includeInTopMenu;
 	}
 
+	
+	
+	public String getBreadcrumb() {
+		return breadcrumb;
+	}
+
+	public void setBreadcrumb(String breadcrumb) {
+		this.breadcrumb = breadcrumb;
+	}
+
 	@Override
 	public Integer getId() {
 		// TODO Auto-generated method stub
@@ -265,6 +283,23 @@ public class Category extends SalesManagerEntity<Integer, Category> implements A
 	@Override
 	public AuditSection getAuditSection() {
 		return auditSection;
+	}
+
+	
+	
+	
+	@Override
+	public String toString() {
+		return "Category [id=" + id + ", name=" + name + ", categoryImage="
+				+ categoryImage + ", sortOrder=" + sortOrder + ", description="
+				+ description + ", seoUrl=" + seoUrl + ", metatagTitle="
+				+ metatagTitle + ", metatagKeywords=" + metatagKeywords
+				+ ", metatagDescription=" + metatagDescription + ", lineage="
+				+ lineage + ", icon=" + icon + ", cssclass=" + cssclass
+				+ ", depth=" + depth + ", parent=" + parent + ", categories="
+				+ categories + ", auditSection=" + auditSection + ", Active="
+				+ Active + ", ShowOnHomePage=" + ShowOnHomePage
+				+ ", IncludeInTopMenu=" + IncludeInTopMenu + "]";
 	}
 
 

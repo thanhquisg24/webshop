@@ -7,6 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -42,7 +45,7 @@ public class CategoryServiceImpl implements CategoryService {
 	
 	public void create(Category category)  {
 		
-		categoryRepository.saveAndFlush(category);
+		category=categoryRepository.saveAndFlush(category);
 		
 		StringBuilder lineage = new StringBuilder();
 		Category parent = category.getParent();
@@ -55,8 +58,6 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 		category.setLineage(lineage.toString());
 		categoryRepository.saveAndFlush(category);
-		
-		
 	}
 	
 	@Override
@@ -77,18 +78,17 @@ public class CategoryServiceImpl implements CategoryService {
 	public void saveOrUpdate(Category category) throws ServiceException  {
 		try {
 		
-		
-		
 		//save or update (persist and attach entities
 		if(category.getId()!=null && category.getId()>0) {
 
-			categoryRepository.saveAndFlush(category);
+			category = categoryRepository.saveAndFlush(category);
 			
 		} else {
 			
-			categoryRepository.saveAndFlush(category);
+			category=  categoryRepository.saveAndFlush(category);
 			
 		}
+		//System.out.println(category);
 		//ajust lineage and depth
 		if(category.getParent()!=null && category.getParent().getId()!=-1) { 
 		
@@ -96,6 +96,13 @@ public class CategoryServiceImpl implements CategoryService {
 			parent.setId(category.getParent().getId());
 			addChild(parent, category);
 		
+		}
+		
+		if(category.getParent()==null){
+			category.setDepth(0);
+			category.setLineage(new StringBuilder().append("/").append(category.getId()).append("/").toString());
+			category.setBreadcrumb(category.getName());
+			categoryRepository.saveAndFlush(category);
 		}
 		
 		} catch (Exception e) {
@@ -230,27 +237,23 @@ public class CategoryServiceImpl implements CategoryService {
 				child.setParent(null);
 				child.setDepth(0);
 				//child.setLineage(new StringBuilder().append("/").append(child.getId()).append("/").toString());
-				child.setLineage("/");
+				child.setLineage(new StringBuilder().append("/").append(child.getId()).append("/").toString());
+				child.setBreadcrumb(child.getName());
 				
 			} else {
 				
 				Category p = this.getById(parent.getId());//parent
-				
-				
-
-				
 				String lineage = p.getLineage();
 				int depth = p.getDepth();//TODO sometimes null
-				
 				child.setParent(p);
 				child.setDepth(depth+1);
-				child.setLineage(new StringBuilder().append(lineage).append(p.getId()).append("/").toString());
-				
-				
+				child.setLineage(new StringBuilder().append(lineage).append(child.getId()).append("/").toString());
+				child.setBreadcrumb(new StringBuilder().append(p.getName()).append(" >> ").append(child.getName()).toString() );
+
 			}
 			
 
-			categoryRepository.save(child);
+			child=categoryRepository.save(child);
 			StringBuilder childLineage = new StringBuilder();
 			childLineage.append(child.getLineage()).append(child.getId()).append("/");
 			List<Category> subCategories = listByLineage(childLineage.toString());
@@ -286,8 +289,20 @@ public class CategoryServiceImpl implements CategoryService {
 		} catch (Exception e) {
 			throw new ServiceException(e);
 		}
-		
-		
+	
+	}
+
+	@Override
+	public List<Category> findAllRoot() {
+		// TODO Auto-generated method stub
+		return categoryRepository.findAllRoot() ;
+	}
+
+	@Override
+	public Page<Category> findAll(String searchName,Pageable pageRequest
+			) {
+		// TODO Auto-generated method stub
+		return categoryRepository.findAlldistinct(searchName,pageRequest);
 	}
 	
 	

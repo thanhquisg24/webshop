@@ -9,6 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,11 +20,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopping.core.business.exception.ServiceException;
 import com.shopping.core.business.services.catalog.category.CategoryService;
 import com.shopping.core.model.catalog.category.Category;
+import com.shopping.core.spec.CategorySpecification;
+import com.shopping.core.utils.SearchOperation;
+import com.shopping.core.utils.SpecSearchCriteria;
 import com.shopping.web.support.MessageHelper;
 import com.shopping.web.support.UserSessionHelper;
 
@@ -35,10 +43,22 @@ public class CategoryController {
 	@Autowired
 	CategoryService categoryService;
 	
-	@RequestMapping(value="/admin/categories/", method=RequestMethod.GET)
+	@RequestMapping(value={"/admin/categories/","/admin/categories"}, method=RequestMethod.GET)
 	public String displayCategories(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return "admin/catalogue/categories/list";
 	}
+	@RequestMapping(value={"/admin/categories/list"}, method=RequestMethod.GET)
+	@ResponseBody
+	public Page<Category> getAllList(	@RequestParam(value="page",required=false,defaultValue="1") int page,
+									    @RequestParam(value="pageSize",required=false,defaultValue="15") int pageSize,
+									    @RequestParam(value="category_name",required=false,defaultValue="") String category_name,
+								HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		PageRequest pageRequest=new  PageRequest(page-1,pageSize , Direction.ASC, "lineage","sortOrder");
+		Page<Category> pageCatgory=categoryService.findAll(category_name,pageRequest);
+		return pageCatgory;
+	}
+	
 
 	//@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/categories/editCategory", method=RequestMethod.GET)
@@ -59,7 +79,7 @@ public class CategoryController {
 	private String displayCategory(Integer categoryId, Model model, HttpServletRequest request) throws Exception {
 
 		//get parent categories
-		List<Category> categories = categoryService.listAll();
+		List<Category> categories = categoryService.findAllRoot();
 		Category category = new Category();
 		
 		if(categoryId!=null && categoryId!=0) {//edit mode
@@ -87,7 +107,7 @@ public class CategoryController {
 		}
 		if (result.hasErrors()) {
 		
-			System.out.println(result.getAllErrors().toString());
+			//System.out.println(result.getAllErrors().toString());
 			
 			return "admin/catalogue/categories/form";
 		}
@@ -97,6 +117,7 @@ public class CategoryController {
 				category.setParent(null);
 				category.setLineage("/");
 				category.setDepth(0);
+				category.setBreadcrumb(category.getName());
 			}
 		}
 		category.getAuditSection().setModifiedBy(UserSessionHelper.getPrincipalName(principal));
