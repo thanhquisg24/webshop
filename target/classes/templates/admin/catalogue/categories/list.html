@@ -73,10 +73,6 @@
 					<div class="col-md-12" style="padding-bottom:10px;">
 						<a th:href="@{/admin/categories/createCategory}" class="btn btn-primary"><span
 							class="glyphicon glyphicon-plus"></span> Add new</a> 
-							<a href="#"
-							class="btn btn-primary"><span
-							class="glyphicon glyphicon-plus"></span> Add new</a>
-
 						<div class="btn-group">
 							<button type="button" class="btn btn-success">
 								<i class="fa fa-download"></i> Export
@@ -133,7 +129,7 @@
 										<div class="form-group">
 										  <label class="col-md-4 control-label" for=""></label>
 										  <div class="col-md-4">
-										    <button type="button" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
+										    <button type="button" id="search-categories" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
 										  </div>
 										</div>
 								</form>
@@ -179,6 +175,24 @@
                             return data;
                         }
                         $(document).ready(function() {
+                        	
+                        	 $('#search-categories').click(function() {
+                                 //search
+                                 var grid = $('#categories-grid').data('kendoGrid');
+                                 grid.dataSource.page(1); //new search. Set page size to 1
+                                 //grid.dataSource.read(); we already loaded the grid above using "page" function
+                                 return false;
+                             });
+
+                             $("#category_name").keydown(function(event) {
+                                 if (event.keyCode == 13) {
+                                     $("#search-categories").click();
+                                     return false;
+                                 }
+                             });
+                        	
+                        	
+                        	
                             $("#categories-grid").kendoGrid({
                                 dataSource: {
                                     type: "json",

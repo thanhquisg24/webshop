@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.jpa.domain.Specifications;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,15 +21,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shopping.core.business.exception.ServiceException;
 import com.shopping.core.business.services.catalog.category.CategoryService;
 import com.shopping.core.model.catalog.category.Category;
-import com.shopping.core.spec.CategorySpecification;
-import com.shopping.core.utils.SearchOperation;
-import com.shopping.core.utils.SpecSearchCriteria;
+
 import com.shopping.web.support.MessageHelper;
+import com.shopping.web.support.UploadHelper;
 import com.shopping.web.support.UserSessionHelper;
 
 
@@ -93,22 +94,16 @@ public class CategoryController {
 	//@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/categories/save", method=RequestMethod.POST)
 	public String saveCategory(@Valid @ModelAttribute("category")  Category category, BindingResult result, Model model,
-			RedirectAttributes ra, HttpServletRequest request,Principal principal)  throws Exception {
-
+			RedirectAttributes ra, HttpServletRequest request,MultipartHttpServletRequest request_multipart,Principal principal)  throws Exception {
 		if(category.getId() != null && category.getId() >0) { //edit entry
-			
 			//get from DB
 			Category currentCategory = categoryService.getById(category.getId());
 			
 			if(currentCategory==null) {
 				return displayCategoryCreate(model,request);//add new
 			}
-
 		}
 		if (result.hasErrors()) {
-		
-			//System.out.println(result.getAllErrors().toString());
-			
 			return "admin/catalogue/categories/form";
 		}
 		//check parent
@@ -120,6 +115,20 @@ public class CategoryController {
 				category.setBreadcrumb(category.getName());
 			}
 		}
+		
+		//seting upload image
+		String oldImage=request.getParameter("oldImage");
+		MultipartFile file=request_multipart.getFile("fileupload");
+		if(file!=null){
+			if(file.isEmpty()){
+				category.setCategoryImage(oldImage);
+			}else{
+				category.setCategoryImage(UploadHelper.doUpload(request, "category", file));
+			}
+		}
+		
+		//end setting upload image
+		
 		category.getAuditSection().setModifiedBy(UserSessionHelper.getPrincipalName(principal));
 		try{
 			categoryService.saveOrUpdate(category);
@@ -130,7 +139,6 @@ public class CategoryController {
 	   return "redirect:/admin/categories";
 
 	}
-	
 	/*
 	//category list
 	@PreAuthorize("hasRole('PRODUCTS')")

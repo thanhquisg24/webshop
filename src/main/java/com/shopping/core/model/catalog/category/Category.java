@@ -98,7 +98,7 @@ public class Category extends SalesManagerEntity<Integer, Category> implements A
 	@Embedded
 	private AuditSection auditSection = new AuditSection();
 	
-	@Column(name = "ISACTIVE")
+	@Column(name = "IS_ACTIVE")
 	private boolean Active = true;
 
 	
@@ -108,6 +108,9 @@ public class Category extends SalesManagerEntity<Integer, Category> implements A
 
 	@Column(name = "INCLUDE_IN_TOP_MENU")
 	private boolean IncludeInTopMenu = true;
+	
+	@Column(name = "IS_FEATURE")
+	private boolean Feature = false;
 
 	public String getName() {
 		return name;
@@ -232,8 +235,13 @@ public class Category extends SalesManagerEntity<Integer, Category> implements A
 	
 	
 
+	public boolean isFeature() {
+		return Feature;
+	}
 
-	
+	public void setFeature(boolean feature) {
+		Feature = feature;
+	}
 
 	public boolean isActive() {
 		return Active;

@@ -59,7 +59,7 @@
 			<section class="content">
 				<div class="row">
 
-				<form  novalidate="novalidate" th:action="@{admin/categories/save}" th:object="${category}" method="post">
+				<form  novalidate="novalidate" th:action="@{admin/categories/save}" th:object="${category}" method="post" enctype="multipart/form-data">
 				 <input type="hidden"   th:field="*{id}">
 				 			
 					<div class="col-md-12" style="padding-bottom: 10px;">
@@ -99,15 +99,25 @@
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="filebutton">Picture</label>
 											<div class="col-md-4">
-													<div class="fileinput fileinput-new" data-provides="fileinput">
+													<div class="fileinput " data-provides="fileinput"  
+													th:classappend="${#strings.isEmpty(category.categoryImage)} ? fileinput-new : fileinput-exists">
+													     <input type="hidden" name="oldImage" th:value="${category.categoryImage}">
+													     
 			                                            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
 			                                               		 <img data-src="holder.js/100%x100%" alt="..."></div>
-			                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"></div>
+			                                               		 
+			                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;">
+			                                            	<th:block th:if="!${#strings.isEmpty(category.categoryImage)}">
+			                                            		 <img th:src="@{'upload/category/'+ ${category.categoryImage}}" alt="...">
+			                                            	</th:block>
+			                                            		
+			                                            </div>
 			                                            <div>
 			                                                <span class="btn btn-default btn-file">
 			                                                    <span class="fileinput-new">Select image</span>
 			                                                    <span class="fileinput-exists">Change</span>
 			                                                    <input type="file" name="fileupload"></span>
+			                                               
 			                                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
 			                                            </div>
 			                                        </div>
@@ -167,7 +177,16 @@
 												</label>
 											</div>
 										</div>
-
+									<!-- Multiple Checkboxes (inline) -->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="checkboxes">Is Feature </label>
+											<div class="col-md-4">
+												<label class="checkbox-inline" for="checkboxes-0"> <input
+													type="checkbox"  th:field="*{Feature}"
+													value="1"> &nbsp;
+												</label>
+											</div>
+										</div>
 										<!-- Multiple Checkboxes (inline) -->
 										<div class="form-group">
 											<label class="col-md-4 control-label" for="checkboxes">Published</label>
@@ -178,6 +197,7 @@
 												</label>
 											</div>
 										</div>
+
 
 										<!-- Text input-->
 										<div class="form-group">
