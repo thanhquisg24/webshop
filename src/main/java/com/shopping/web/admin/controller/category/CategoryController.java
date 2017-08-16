@@ -94,7 +94,7 @@ public class CategoryController {
 	//@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/categories/save", method=RequestMethod.POST)
 	public String saveCategory(@Valid @ModelAttribute("category")  Category category, BindingResult result, Model model,
-			RedirectAttributes ra, HttpServletRequest request,MultipartHttpServletRequest request_multipart,Principal principal)  throws Exception {
+                       HttpServletRequest request,MultipartHttpServletRequest request_multipart,Principal principal,RedirectAttributes ra)  throws Exception {
 		if(category.getId() != null && category.getId() >0) { //edit entry
 			//get from DB
 			Category currentCategory = categoryService.getById(category.getId());
