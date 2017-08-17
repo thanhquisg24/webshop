@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html >
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<title>Manufacturer - Add new / Update</title>
+<base
+	th:href="${@environment.getProperty('layout.thymleaf.admin.head.base.href')}" />
+<meta
+	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+	name='viewport'>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<!-- global css -->
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<!-- font Awesome -->
+<link href="vendors/font-awesome-4.2.0/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
+<link href="css/styles/black.css" rel="stylesheet" type="text/css"
+	id="colorscheme" />
+<link href="css/panel.css" rel="stylesheet" type="text/css" />
+<link href="css/metisMenu.css" rel="stylesheet" type="text/css" />
+<!-- end of global css -->
+<!--page level css -->
+<link href="vendors/fullcalendar/css/fullcalendar.css" rel="stylesheet"
+	type="text/css" />
+<link href="css/pages/calendar_custom.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" media="all"
+	href="vendors/jvectormap/jquery-jvectormap.css" />
+
+<link href="vendors/jasny-bootstrap/css/jasny-bootstrap.css" rel="stylesheet">
+<link href="css/text.css" rel="stylesheet">
+<!--end of page level css-->
+</head>
+
+<body class="skin-josh">
+	<header class="header" th:replace="admin/layout/header :: header"></header>
+	<div class="wrapper row-offcanvas row-offcanvas-left">
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside class="left-side sidebar-offcanvas"
+			th:replace="admin/layout/_leftsidebar :: left(active='catalog',subactive='manufacture')">
+		</aside>
+
+		<!-- Right side column. Contains the navbar and content of the page -->
+		<aside class="right-side">
+			<section class="content-header">
+				<h1>
+					Add a new manufacture <small><i
+						class="fa fa-arrow-circle-left"></i><a
+						th:href="@{/admin/manufacture/}">back to manufacture list</a></small>
+				</h1>
+
+			</section>
+			<section class="content">
+				<div class="row">
+
+				<form  novalidate="novalidate" th:action="@{admin/manufacture/save}" th:object="${manufacture}" method="post" enctype="multipart/form-data">
+				 <input type="hidden"   th:field="*{id}">
+				 			
+					<div class="col-md-12" style="padding-bottom: 10px;">
+						<button type="submit"
+							class="btn btn-primary">
+							<i class="fa fa-floppy-o"></i> Save
+						</button>
+					</div>
+					<div class="col-md-8">
+						<div class="panel panel-white">
+							<div class="panel-heading border-light">
+								<h4 class="panel-title">Manufacture info</h4>
+
+							</div>
+							<div class="panel-body">
+							
+									<fieldset class="form-horizontal">
+									<!-- Text input-->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="name">Code*</label>
+											<div class="col-md-8">
+												<input th:field="*{code}"
+													class="form-control input-md" required="">
+												<span  th:if="${#fields.hasErrors('code')}"  th:errors="*{code}"  class="help-block text-red"></span>
+											</div>
+										</div>
+										<!-- Text input-->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="name">Name*</label>
+											<div class="col-md-8">
+												<input th:field="*{name}"
+													class="form-control input-md" required="">
+												<span  th:if="${#fields.hasErrors('name')}"  th:errors="*{name}"  class="help-block text-red"></span>
+											</div>
+										</div>
+											<!-- Text input-->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="title">Title</label>
+											<div class="col-md-8">
+												<input th:field="*{title}"
+													class="form-control input-md" required="">
+												<span  th:if="${#fields.hasErrors('title')}"  th:errors="*{title}"  class="help-block text-red"></span>
+											</div>
+										</div>
+										
+										<!-- Textarea -->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="description">Description</label>
+											<div class="col-md-8">
+												<textarea class="form-control" th:field="*{description}"></textarea>
+											</div>
+										</div>
+
+										<!-- File Button -->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="filebutton">Picture</label>
+											<div class="col-md-4">
+													<div class="fileinput " data-provides="fileinput"  
+													th:classappend="${#strings.isEmpty(manufacture.image )} ? fileinput-new : fileinput-exists">
+													     <input type="hidden" name="oldImage" th:value="${manufacture.image}">
+													     
+			                                            <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
+			                                               		 <img data-src="holder.js/100%x100%" alt="..."></div>
+			                                               		 
+			                                            <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;">
+			                                            	<th:block th:if="!${#strings.isEmpty(manufacture.image)}">
+			                                            		 <img th:src="@{'upload/manufacture/'+ ${manufacture.image}}" alt="...">
+			                                            	</th:block>
+			                                            		
+			                                            </div>
+			                                            <div>
+			                                                <span class="btn btn-default btn-file">
+			                                                    <span class="fileinput-new">Select image</span>
+			                                                    <span class="fileinput-exists">Change</span>
+			                                                    <input type="file" name="fileupload"></span>
+			                                               
+			                                                <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+			                                            </div>
+			                                        </div>
+											</div>
+										</div>
+										<!-- Text input-->
+										<div class="form-group">
+											<label class="col-md-4 control-label" for="sort_order">Display
+												order</label>
+											<div class="col-md-4">
+												<input id="sort_order"  th:field="*{order}" type="number" 
+													 class="form-control input-sm">
+
+											</div>
+										</div>
+
+									</fieldset>
+							</div>
+						</div>
+					</div>
+
+				
+					</form>
+				</div>
+				<!--/row-->
+
+			</section>
+		</aside>
+		<!-- right-side -->
+	</div>
+	<div id="footer_global"
+		th:replace="admin/layout/footer :: footer_global"></div>
+	<!-- begining of page level js -->
+	<!--  todolist-->
+	<script src="vendors/jasny-bootstrap/js/jasny-bootstrap.js"></script>
+	<script type="text/javascript"></script>
+
+
+	<!-- end of page level js -->
+
+</body>
+</html>

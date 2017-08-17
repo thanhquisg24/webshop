@@ -50,10 +50,10 @@
                                         Categories
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="advanced_tables.html">
+                                <li th:class="${subactive} == 'manufacture'? 'active' : ''">
+                                    <a th:href="@{/admin/manufacture/}">
                                         <i class="fa fa-angle-double-right"></i>
-                                        Advanced Data Tables
+                                        Manufacturers
                                     </a>
                                 </li>
                                 <li>

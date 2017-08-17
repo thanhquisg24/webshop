@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 
-
-import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.shopping.core.constants.SchemaConstant;
@@ -30,43 +28,78 @@ import com.shopping.core.model.generic.SalesManagerEntity;
 public class Manufacturer extends SalesManagerEntity<Long, Manufacturer> implements Auditable {
 	private static final long serialVersionUID = 80693964563570099L;
 	
+	/**
+	 * 
+	 */
 	@Id
 	@Column(name = "MANUFACTURER_ID", unique=true, nullable=false)
 	@TableGenerator(name = "TABLE_GEN", table = "SM_SEQUENCER", pkColumnName = "SEQ_NAME", valueColumnName = "SEQ_COUNT", pkColumnValue = "MANUFACT_SEQ_NEXT_VAL")
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "TABLE_GEN")
 	private Long id;
 	
+	/**
+	 * 
+	 * 
+	 * 
+	 */
 	@Embedded
 	private AuditSection auditSection = new AuditSection();
 	
 
+	/**
+	 * 
+	 */
 	@Column(name = "MANUFACTURER_IMAGE")
 	private String image;
 	
+	/**
+	 * 
+	 */
 	@Column(name="SORT_ORDER")
 	private Integer order = new Integer(0);
 
+	/**
+	 * 
+	 */
 	@NotEmpty
 	@Column(name="CODE", length=100, nullable=false)
 	private String code;
 
+	/**
+	 * 
+	 */
 	@NotEmpty
 	@Column(name="NAME", nullable = false, length=120)
 	private String name;
 	
+	/**
+	 * 
+	 */
 	@Column(name="TITLE", length=100)
 	private String title;
 	
+	/**
+	 * 
+	 */
 	@Column(name="DESCRIPTION",columnDefinition = "TEXT")
 	private String description;
 	
 	
+	/**
+	 * 
+	 */
 	@Column(name = "MANUFACTURERS_URL")
 	private String url;
 	
+	/**
+	 * 
+	 */
 	@Column(name = "URL_CLICKED")
 	private Integer urlClicked;
 	
+	/**
+	 * 
+	 */
 	@Column(name = "DATE_LAST_CLICK")
 	private Date dateLastClick;
 	
