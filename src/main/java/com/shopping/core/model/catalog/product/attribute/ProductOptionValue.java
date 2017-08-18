@@ -15,7 +15,6 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Pattern;
 
 import org.springframework.web.multipart.MultipartFile;
-import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.shopping.core.constants.SchemaConstant;

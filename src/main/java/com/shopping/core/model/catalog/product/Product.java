@@ -27,7 +27,6 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.shopping.core.constants.SchemaConstant;
@@ -106,6 +105,8 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 	private Manufacturer manufacturer;
 
 
+	@Column(name="PRODUCT_TYPE")//0 single 1 variant
+	private boolean type;
 	
 	
 
@@ -345,6 +346,14 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 
 
 
+
+	public boolean isType() {
+		return type;
+	}
+
+	public void setType(boolean type) {
+		this.type = type;
+	}
 
 	public Date getDateAvailable() {
 		return dateAvailable;
