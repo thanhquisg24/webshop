@@ -2,7 +2,7 @@ package com.shopping.web.admin.controller.manufacture;
 
 
 import java.security.Principal;
-import java.util.List;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,8 +66,8 @@ public class ManufactureController {
 
 	//@PreAuthorize("hasRole('PRODUCTS')")
 	@RequestMapping(value="/admin/manufacture/editManufacture", method=RequestMethod.GET)
-	public String displaymanufactureEdit(@RequestParam("code") String code, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return displaymanufacture(code,model,request);
+	public String displaymanufactureEdit(@RequestParam("id") Long id, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return displaymanufacture(id,model,request);
 
 	}
 	
@@ -80,13 +80,13 @@ public class ManufactureController {
 	
 	
 	
-	private String displaymanufacture(String code, Model model, HttpServletRequest request) throws Exception {
+	private String displaymanufacture(Long id, Model model, HttpServletRequest request) throws Exception {
 
 
 		Manufacturer manufacture = new Manufacturer();
 		
-		if(code!=null && !code.isEmpty()) {//edit mode
-			manufacture = manufactureService.getByCode(code);
+		if(id!=null && id>0) {//edit mode
+			manufacture = manufactureService.getByID(id);
 		}
 		model.addAttribute("manufacture", manufacture);
 		return "admin/catalogue/manufacturer/form";
@@ -98,7 +98,7 @@ public class ManufactureController {
                        HttpServletRequest request,MultipartHttpServletRequest request_multipart,Principal principal,RedirectAttributes ra)  throws Exception {
 		if(manufacture.getId() != null && manufacture.getId() >0) { //edit entry
 			//get from DB
-			Manufacturer currentmanufacture = manufactureService.getByCode(manufacture.getCode());
+			Manufacturer currentmanufacture = manufactureService.getByID(manufacture.getId());
 			
 			if(currentmanufacture==null) {
 				return displaymanufactureCreate(model,request);//add new

@@ -22,6 +22,8 @@ public interface ManufactureService {
 	Page<Manufacturer> findAll(String manufacture_name, Pageable pageRequest);
 
 	Manufacturer getByCode(String code);
+	
+	Manufacturer getByID(Long id);
 
 	void saveOrUpdate(Manufacturer manufacture) throws ServiceException ;
 	

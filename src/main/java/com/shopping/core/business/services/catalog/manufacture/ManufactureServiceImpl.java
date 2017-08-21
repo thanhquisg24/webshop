@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+
 import com.shopping.core.business.exception.ServiceException;
 import com.shopping.core.business.repositories.catalog.manufacture.ManufacturerRepository;
 import com.shopping.core.model.catalog.product.manufacturer.Manufacturer;
@@ -65,6 +66,12 @@ public class ManufactureServiceImpl implements ManufactureService {
 			throws ServiceException {
 		// TODO Auto-generated method stub
 		return repository.findByCategories(ids);
+	}
+
+	@Override
+	public Manufacturer getByID(Long id) {
+		// TODO Auto-generated method stub
+		return repository.findOne(id);
 	}
 	
 }

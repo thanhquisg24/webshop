@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <base href="/">
-<title>Manufacturer</title>
+<title>Attribute Options </title>
 <base
 	th:href="${@environment.getProperty('layout.thymleaf.admin.head.base.href')}" />
 <meta
@@ -51,14 +51,14 @@
 	<div class="wrapper row-offcanvas row-offcanvas-left">
 		<!-- Left side column. contains the logo and sidebar -->
 		<aside class="left-side sidebar-offcanvas"
-			th:replace="admin/layout/_leftsidebar :: left(active='catalog',subactive='manufacture')">
+			th:replace="admin/layout/_leftsidebar :: left(active='catalog',subactive='option')">
 		</aside>
 
 		<!-- Right side column. Contains the navbar and content of the page -->
 		<aside class="right-side">
 			<section class="content-header">
 				
-				<h1>Manage Manufacturers</h1>
+				<h1>Manage Attribute Options </h1>
 		
 			</section>
 								  <!-- /* Handle the flash message */-->
@@ -71,7 +71,7 @@
 			<section class="content">
 				<div class="row">
 					<div class="col-md-12" style="padding-bottom:10px;">
-						<a th:href="@{/admin/manufacture/createManufacture}" class="btn btn-primary"><span
+						<a th:href="@{/admin/options/createOption}" class="btn btn-primary"><span
 							class="glyphicon glyphicon-plus"></span> Add new</a> 
 						<div class="btn-group">
 							<button type="button" class="btn btn-success">
@@ -114,9 +114,9 @@
 			
 										<!-- Text input-->
 										<div class="form-group">
-										  <label class="col-md-4 control-label" for="name">Manufacetuner name</label>  
+										  <label class="col-md-4 control-label" for="name">Attribute Options name</label>  
 										  <div class="col-md-4">
-										  <input id="manufaceture_name" name="name" type="text" placeholder="" class="form-control input-md">
+										  <input id="option_name" name="name" type="text" placeholder="" class="form-control input-md">
 										    
 										  </div>
 										</div>
@@ -125,7 +125,7 @@
 										<div class="form-group">
 										  <label class="col-md-4 control-label" for=""></label>
 										  <div class="col-md-4">
-										    <button type="button" id="search-manufacturer" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
+										    <button type="button" id="search-option" class="btn btn-lg btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
 										  </div>
 										</div>
 								</form>
@@ -142,7 +142,7 @@
 					<div class="col-md-12">
 								<div class="panel panel-white">
 								<div class="panel-body">
-										<div id="manufacturer-grid"></div>
+										<div id="attributeoption-grid"></div>
 								</div>
 							</div>
 						</div>
@@ -165,16 +165,16 @@
 	            
 	          	 	function additionalData() {
                             var data = {
-                            		manufacture_name: $('#manufaceture_name').val(),
+                            		option_name: $('#option_name').val(),
                            
                             };
                             return data;
                         }
                         $(document).ready(function() {
                         	
-                        	 $('#search-manufacturer').click(function() {
+                        	 $('#search-option').click(function() {
                                  //search
-                                 var grid = $('#manufacturer-grid').data('kendoGrid');
+                                 var grid = $('#attributeoption-grid').data('kendoGrid');
                                  grid.dataSource.page(1); //new search. Set page size to 1
                                  //grid.dataSource.read(); we already loaded the grid above using "page" function
                                  return false;
@@ -182,19 +182,19 @@
 
                              $("#manufaceture_name").keydown(function(event) {
                                  if (event.keyCode == 13) {
-                                     $("#search-manufacturer").click();
+                                     $("#search-option").click();
                                      return false;
                                  }
                              });
                         	
                         	
                         	
-                            $("#manufacturer-grid").kendoGrid({
+                            $("#attributeoption-grid").kendoGrid({
                                 dataSource: {
                                     type: "json",
                                     transport: {
                                         read: {
-                                            url: "admin/manufacture/list",
+                                            url: "admin/options/list",
                                             type: "GET",
                                             dataType: "json",
                                             data: additionalData
@@ -246,8 +246,21 @@
                                     {
                                         field: "name",
                                         title: "Name"
-                                    }, {
-                                        field: "order",
+                                    },
+                                    {
+                                        field: "productOptionType",
+                                        title: "Type"
+                                    },
+                                    {
+                                        field: "readOnly",
+                                        title: "Readonly",
+                                        width: 100,
+                                        headerAttributes: { style: "text-align:center" },
+                                        attributes: { style: "text-align:center" },
+                                        template: '# if(readOnly) {# <i class="fa fa-check true-icon"></i> #} else {# <i class="fa fa-close false-icon"></i> #} #'
+                                    },
+                                    {
+                                        field: "productOptionSortOrder",
                                         title: "Display order",
                                         width: 150
                                     }, {
@@ -256,7 +269,7 @@
                                         width: 100,
                                         headerAttributes: { style: "text-align:center" },
                                         attributes: { style: "text-align:center" },
-                                        template: '<a class="btn btn-default" href="admin/manufacture/editManufacture?id=#=id#"><i class="fa fa-pencil"></i>Edit</a>'
+                                        template: '<a class="btn btn-default" href="admin/options/editOption?id=#=id#"><i class="fa fa-pencil"></i>Edit</a>'
                                     }
                                 ]
                             });

@@ -56,16 +56,16 @@
                                         Manufacturers
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="editable_table.html">
+                                <li th:class="${subactive} == 'option'? 'active' : ''">
+                                    <a th:href="@{/admin/options/}">
                                         <i class="fa fa-angle-double-right"></i>
-                                        Editable Datatables
+                                         Attribute Options
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="responsive_tables.html">
+                                <li th:class="${subactive} == 'optionvalue'? 'active' : ''">
+                                    <a hth:href="@{/admin/categories/}">
                                         <i class="fa fa-angle-double-right"></i>
-                                        Responsive Datatables
+                                        Attribute Options values
                                     </a>
                                 </li>
                             </ul>
