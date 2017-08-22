@@ -2,7 +2,7 @@ package com.shopping.web.admin.controller.products;
 
 import com.shopping.core.business.exception.ServiceException;
 import com.shopping.core.business.services.catalog.product.attribute.ProductOptionService;
-import com.shopping.core.model.catalog.category.Category;
+
 import com.shopping.core.model.catalog.product.attribute.ProductOption;
 import com.shopping.web.support.MessageHelper;
 import com.shopping.web.utils.LabelUtils;
@@ -16,7 +16,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 

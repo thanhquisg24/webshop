@@ -2,20 +2,20 @@ package com.shopping.core.business.services.catalog.product.attribute;
 
 import java.util.List;
 
-
-
-
-
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.shopping.core.business.exception.ServiceException;
 import com.shopping.core.business.repositories.catalog.product.attribute.ProductOptionValueRepository;
-import com.shopping.core.model.catalog.product.attribute.ProductAttribute;
+import com.shopping.core.model.catalog.product.attribute.ProductOption;
 import com.shopping.core.model.catalog.product.attribute.ProductOptionValue;
 
 
 @Service("productOptionValueService")
+@Transactional(rollbackFor = com.shopping.core.business.exception.ServiceException.class)
 public class ProductOptionValueServiceImpl implements
 		ProductOptionValueService {
 
@@ -91,6 +91,13 @@ public class ProductOptionValueServiceImpl implements
 	@Override
 	public ProductOptionValue getById(Long optionValueId) {
 		return productOptionValueRepository.findOne( optionValueId);
+	}
+
+	@Override
+	public Page<ProductOptionValue> findAll(String option_val_name,
+			Pageable pageRequest) {
+		// TODO Auto-generated method stub
+		return productOptionValueRepository.findByName( option_val_name,pageRequest);
 	}
 
 

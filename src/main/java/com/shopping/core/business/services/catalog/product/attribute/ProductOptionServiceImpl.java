@@ -8,19 +8,19 @@ import java.util.List;
 
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.shopping.core.business.exception.ServiceException;
 import com.shopping.core.business.repositories.catalog.product.attribute.ProductOptionRepository;
-import com.shopping.core.business.services.common.generic.SalesManagerEntityServiceImpl;
-import com.shopping.core.model.catalog.product.attribute.ProductAttribute;
 import com.shopping.core.model.catalog.product.attribute.ProductOption;
 
 
 @Service("productOptionService")
+@Transactional(rollbackFor = com.shopping.core.business.exception.ServiceException.class)
 public class ProductOptionServiceImpl  implements ProductOptionService {
 
 	

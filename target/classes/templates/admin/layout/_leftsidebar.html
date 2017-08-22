@@ -50,6 +50,13 @@
                                         Categories
                                     </a>
                                 </li>
+                                <li th:class="${subactive} == 'product'? 'active' : ''">
+                                    <a th:href="@{/admin/product/}">
+                                        <i class="fa fa-angle-double-right"></i>
+                                        Product
+                                    </a>
+                                </li>
+                                
                                 <li th:class="${subactive} == 'manufacture'? 'active' : ''">
                                     <a th:href="@{/admin/manufacture/}">
                                         <i class="fa fa-angle-double-right"></i>
@@ -63,7 +70,7 @@
                                     </a>
                                 </li>
                                 <li th:class="${subactive} == 'optionvalue'? 'active' : ''">
-                                    <a hth:href="@{/admin/categories/}">
+                                    <a th:href="@{/admin/options-value/}">
                                         <i class="fa fa-angle-double-right"></i>
                                         Attribute Options values
                                     </a>
