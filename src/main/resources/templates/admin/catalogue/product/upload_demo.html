@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<base href="/">
+<title>Upload demo</title>
+<base
+	th:href="${@environment.getProperty('layout.thymleaf.admin.head.base.href')}" />
+<meta
+	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+	name='viewport'>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+<!-- global css -->
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<!-- font Awesome -->
+<link href="vendors/font-awesome-4.2.0/css/font-awesome.min.css"
+	rel="stylesheet" type="text/css" />
+<link href="css/styles/black.css" rel="stylesheet" type="text/css"
+	id="colorscheme" />
+<link href="css/panel.css" rel="stylesheet" type="text/css" />
+<link href="css/metisMenu.css" rel="stylesheet" type="text/css" />
+<!-- end of global css -->
+<!--page level css -->
+<link href="vendors/fullcalendar/css/fullcalendar.css" rel="stylesheet"
+	type="text/css" />
+<link href="css/pages/calendar_custom.css" rel="stylesheet"
+	type="text/css" />
+<link rel="stylesheet" media="all"
+	href="vendors/jvectormap/jquery-jvectormap.css" />
+
+<link href="vendors/jasny-bootstrap/css/jasny-bootstrap.css"
+	rel="stylesheet">
+<link href="css/text.css" rel="stylesheet">
+<!--end of page level css-->
+</head>
+<body class="skin-josh">
+	<header class="header" th:replace="admin/layout/header :: header"></header>
+	<div class="wrapper row-offcanvas row-offcanvas-left">
+		<!-- Left side column. contains the logo and sidebar -->
+		<aside class="left-side sidebar-offcanvas"
+			th:replace="admin/layout/_leftsidebar :: left(active='catalog',subactive='null')">
+		</aside>
+
+		<!-- Right side column. Contains the navbar and content of the page -->
+		<aside class="right-side">
+			<section class="content-header">
+				<h1>
+					DEmo<small><i class="fa fa-arrow-circle-left"></i><a
+						th:href="@{/admin/options/}">back to Attribute Options list</a></small>
+				</h1>
+
+			</section>
+			<section class="content">
+				<div class="row">
+
+					<div class="col-md-12">
+						<div class="panel panel-white">
+							<div class="panel-body">
+
+								<!-- Custom Tabs -->
+								<div class="bs-example">
+									<ul class="nav nav-tabs" style="margin-bottom: 15px;">
+										<li class="active"><a href="#tab_1" data-toggle="tab">Tab
+												1</a></li>
+										<li><a href="#tab_2" data-toggle="tab">Tab 2</a></li>
+										<li class="pull-right"><a href="#" class="text-muted">
+												<i class="fa fa-gear"></i>
+										</a></li>
+									</ul>
+									<div class="tab-content" id="slim2">
+										<div class="tab-pane active" id="tab_1">
+										<div class="col-md-4 col-md-offset-2">
+										<form novalidate="novalidate" id="frm-product-img"
+												th:action="@{admin/product-image/save}"
+												method="post"
+												enctype="multipart/form-data">
+												<fieldset class="form-horizontal">
+													<!-- Text input-->
+
+													<!-- Text input-->
+													<div class="form-group">
+														<label class="col-md-4 control-label" for="title">altTag</label>
+														<div class="col-md-8">
+															<input name="altTag" class="form-control input-md"
+																required=""> 
+														</div>
+													</div>
+													<!-- Text input-->
+													<div class="form-group">
+														<label class="col-md-4 control-label" for="title">Title</label>
+														<div class="col-md-8">
+															<input name="title" class="form-control input-md"
+																required="">
+														</div>
+													</div>
+													<!-- File Button -->
+													<div class="form-group">
+														<label class="col-md-4 control-label" for="filebutton">Picture</label>
+														<div class="col-md-4">
+															<div class="fileinput fileinput-new"
+																data-provides="fileinput">
+																<div class="fileinput-new thumbnail"
+																	style="width: 200px; height: 150px;">
+																	<img data-src="holder.js/100%x100%" alt="...">
+																</div>
+
+																<div
+																	class="fileinput-preview fileinput-exists thumbnail"
+																	style="max-width: 200px; max-height: 150px;"></div>
+																<div>
+																	<span class="btn btn-default btn-file"> <span
+																		class="fileinput-new">Select image</span> <span
+																		class="fileinput-exists">Change</span> <input
+																		type="file" name="file"></span> <a href="#"
+																		class="btn btn-default fileinput-exists"
+																		data-dismiss="fileinput">Remove</a>
+																</div>
+															</div>
+														</div>
+													</div>
+
+
+
+													<!-- Text input-->
+													<div class="form-group">
+														<label class="col-md-4 control-label" for="sort_order">Display
+															order</label>
+														<div class="col-md-4">
+															<input id="sort_order" name="displayOrder"
+																type="number" class="form-control input-sm">
+
+														</div>
+													</div>
+													<div class="form-group">
+														<div class="col-md-8 col-md-offset-4">
+															<button type="submit" class="  btn btn-primary">
+																<i class="fa fa-floppy-o"></i> Save
+															</button>
+														</div>	
+													</div>
+												</fieldset>
+											</form>
+
+										
+										
+										</div>
+											
+
+										</div>
+										<!-- /.tab-pane -->
+										<div class="tab-pane" id="tab_2">It is a long
+											established fact that a reader will be distracted by the
+											readable content of a page when looking at its layout. The
+											point of using Lorem Ipsum is that it has a more-or-less
+											normal distribution of letters, as opposed to using 'Content
+											here, content here', making it look like readable English.
+											Many desktop publishing packages and web page editors now use
+											Lorem Ipsum as their default model text, and a search for
+											'lorem ipsum' will uncover many web sites still in their
+											infancy. Various versions have evolved over the years,
+											sometimes by accident, sometimes on purpose (injected humour
+											and the like).</div>
+										<!-- /.tab-pane -->
+									</div>
+									<!-- /.tab-content -->
+								</div>
+								<!-- nav-tabs-custom -->
+
+
+
+
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!--/row-->
+
+			</section>
+		</aside>
+		<!-- right-side -->
+	</div>
+	<div id="footer_global"
+		th:replace="admin/layout/footer :: footer_global"></div>
+	<!-- begining of page level js -->
+	<!--  todolist-->
+	<script src="vendors/jasny-bootstrap/js/jasny-bootstrap.js"></script>
+<script th:inline="javascript">
+/*<![CDATA[*/
+$(document).ready(function () {
+	$('#frm-product-img').submit(function(event) {
+		submmit(event);
+	});
+	
+function submmit(event){
+	event.preventDefault();
+    $(".alert").html("").hide();
+    $(".error-list").html("");
+    //var formData= $('#frm-product-img').serialize();
+    /*$.post("admin/product-image/save",formData ,function(data){
+        if(data.message == "success"){
+            //window.location.href = serverContext + "successRegister.html";
+            alert("success");
+        }
+        
+    })
+    .fail(function(data) {
+        if(data.responseJSON.error.indexOf("InternalError") > -1){
+            //window.location.href = serverContext + "login?message=" + data.responseJSON.message;
+        	  alert("InternalError!");
+        }
+        else{
+        	var errors = $.parseJSON(data.responseJSON.message);
+            $.each( errors, function( index,item ){
+                $("#"+item.field+"Error").show().html(item.defaultMessage);
+            });
+            errors = $.parseJSON(data.responseJSON.error);
+            $.each( errors, function( index,item ){
+                $("#globalError").show().append(item.defaultMessage+"<br/>");
+            });
+        }
+    });*/
+    var form =  $('#frm-product-img')[0];
+    var data = new FormData(form);
+    $.ajax({
+        type: "POST",
+        enctype: 'multipart/form-data',
+        url: "admin/product-image/save",
+        data: data,
+        processData: false,
+        contentType: false,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+        	  if(data.message == "success"){
+                  //window.location.href = serverContext + "successRegister.html";
+                  alert("success");
+              }
+
+        },
+        error: function (data) {
+        	  if(data.responseJSON.error.indexOf("InternalError") > -1){
+                  //window.location.href = serverContext + "login?message=" + data.responseJSON.message;
+              	  alert("InternalError!");
+              }
+              else{
+              	var errors = $.parseJSON(data.responseJSON.message);
+                  $.each( errors, function( index,item ){
+                      $("#"+item.field+"Error").show().html(item.defaultMessage);
+                  });
+                  errors = $.parseJSON(data.responseJSON.error);
+                  $.each( errors, function( index,item ){
+                      $("#globalError").show().append(item.defaultMessage+"<br/>");
+                  });
+              }
+
+        }
+    });
+}
+});
+/*]]>*/ 
+</script>
+
+	<!-- end of page level js -->
+
+</body>
+</html>

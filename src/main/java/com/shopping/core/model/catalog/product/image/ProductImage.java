@@ -51,21 +51,23 @@ public class ProductImage extends SalesManagerEntity<Long, ProductImage> {
 	
 	@Column(name="ALT_TAG", length=100)
 	private String altTag;
+	
+	
+	
 	/**
 	 * default to 0 for images managed by the system
 	 */
-	@Column(name = "IMAGE_TYPE")
-	private int imageType;
-	
+
 	/**
 	 * Refers to images not accessible through the system. It may also be a video.
 	 */
 	@Column(name = "PRODUCT_IMAGE_URL")
 	private String productImageUrl;
 	
+	@Column(name = "DISPLAY_ORDER")
+	private int displayOrder ;
+	
 
-	@Column(name = "IMAGE_CROP")
-	private boolean imageCrop;
 	
 	@ManyToOne(targetEntity = Product.class)
 	@JoinColumn(name = "PRODUCT_ID", nullable = false)
@@ -95,21 +97,7 @@ public class ProductImage extends SalesManagerEntity<Long, ProductImage> {
 		this.defaultImage = defaultImage;
 	}
 
-	public int getImageType() {
-		return imageType;
-	}
 
-	public void setImageType(int imageType) {
-		this.imageType = imageType;
-	}
-
-	public boolean isImageCrop() {
-		return imageCrop;
-	}
-
-	public void setImageCrop(boolean imageCrop) {
-		this.imageCrop = imageCrop;
-	}
 
 	@Override
 	public Long getId() {
@@ -177,6 +165,14 @@ public class ProductImage extends SalesManagerEntity<Long, ProductImage> {
 
 	public void setAltTag(String altTag) {
 		this.altTag = altTag;
+	}
+
+	public int getDisplayOrder() {
+		return displayOrder;
+	}
+
+	public void setDisplayOrder(int displayOrder) {
+		this.displayOrder = displayOrder;
 	}
 
 
