@@ -93,11 +93,13 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 	private Date dateAvailable = new Date();
 	
 	
-	@Column(name="AVAILABLE")
-	private boolean available = true;
+	@Column(name="IS_ACTIVE")
+	private boolean active = true;
 	
-	@Column(name="PREORDER")
-	private boolean preOrder = false;
+
+
+	@Column(name="IS_feature")
+	private boolean feature = false;
 	
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.REFRESH})
@@ -106,19 +108,11 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 
 
 	@Column(name="PRODUCT_TYPE")//0 single 1 variant
-	private boolean type;
-	
+	private boolean type =false;
 	
 
-	@Column(name = "PRODUCT_VIRTUAL")
-	private boolean productVirtual = false;
-	
-	@Column(name = "PRODUCT_SHIP")
-	private boolean productShipeable = false;
-
-
-	@Column(name = "PRODUCT_FREE")
-	private boolean productIsFree;
+	@Column(name = "IS_FREE_SHIPPING")
+	private boolean product_is_free_shipping;
 
 	@Column(name = "PRODUCT_LENGTH")
 	private BigDecimal productLength;
@@ -137,9 +131,52 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 
 	@Column(name = "REVIEW_COUNT")
 	private Integer productReviewCount;
+	
+	/* stocck*/
+	@Column(name = "STOCK_QUANTITY")
+	private Integer stock_quantity;
+	
+	@Column(name = "DISPLAY_STOCK_AVAILABILITY")
+	private boolean display_stock_availability;
+	
+	
+	@Column(name = "DISPLAY_STOCK_QTY")
+	private boolean display_stock_qty;
+	
 
-	@Column(name = "QUANTITY_ORDERED")
-	private Integer productOrdered;
+	@Column(name = "MINIMUM_STOCK_QTY")
+	private Integer minimum_stock_qty;
+
+
+	@Column(name = "MINIMUM_CART_QTY")
+	private Integer minimum_cart_qty;
+
+
+	@Column(name = "MAXIMUM_CART_QTY")
+	private Integer maximum_cart_qty;
+	
+	/*end stock*/
+	
+	/*price*/
+	@Column(name = "PRICE")
+	private BigDecimal price;
+	
+	@Column(name = "OLD_PRICE")
+	private BigDecimal old_price;
+	
+	@Column(name = "PRODUCT_COST")
+	private BigDecimal product_cost;
+	
+	
+	@Column(name = "IS_DISCOUNT")
+	private boolean discount;
+	
+	@Column(name = "PERCENT_DISCOUNT")
+	private float percent_discount =0;
+	
+	@Column(name = "PRICE_DISCOUNT")
+	private BigDecimal price_discount;
+	/*end price*/
 	
 	@Column(name = "SORT_ORDER")
 	private Integer sortOrder = new Integer(0);
@@ -152,8 +189,11 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 	@Column(name="TITLE", length=100)
 	private String title;
 	
-	@Column(name="DESCRIPTION",columnDefinition = "TEXT")
-	private String description;
+	@Column(name="SHORT_DESCRIPTION")
+	private String short_description;
+	
+	@Column(name="FULL_DESCRIPTION",columnDefinition = "TEXT")
+	private String full_description;
 	
 	@Column(name = "SEF_URL")
 	private String seUrl;
@@ -199,11 +239,6 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 	@Override
 	public void setAuditSection(AuditSection auditSection) {
 		this.auditSection = auditSection;
-	}
-
-
-	public boolean isProductVirtual() {
-		return productVirtual;
 	}
 
 
@@ -258,13 +293,7 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 
 
 
-	public Integer getProductOrdered() {
-		return productOrdered;
-	}
 
-	public void setProductOrdered(Integer productOrdered) {
-		this.productOrdered = productOrdered;
-	}
 
 	public String getSku() {
 		return sku;
@@ -275,23 +304,6 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 	}
 
 
-
-
-	public boolean getProductVirtual() {
-		return productVirtual;
-	}
-
-	public void setProductVirtual(boolean productVirtual) {
-		this.productVirtual = productVirtual;
-	}
-
-	public boolean getProductIsFree() {
-		return productIsFree;
-	}
-
-	public void setProductIsFree(boolean productIsFree) {
-		this.productIsFree = productIsFree;
-	}
 
 
 
@@ -312,9 +324,6 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 	public void setManufacturer(Manufacturer manufacturer) {
 		this.manufacturer = manufacturer;
 	}
-
-
-
 
 
 
@@ -373,21 +382,6 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 
 
 
-	public void setAvailable(boolean available) {
-		this.available = available;
-	}
-
-	public boolean isAvailable() {
-		return available;
-	}
-	
-	public boolean isProductShipeable() {
-		return productShipeable;
-	}
-
-	public void setProductShipeable(boolean productShipeable) {
-		this.productShipeable = productShipeable;
-	}
 
 
 	
@@ -404,13 +398,7 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 		return productImage;
 	}
 	
-	public boolean isPreOrder() {
-		return preOrder;
-	}
 
-	public void setPreOrder(boolean preOrder) {
-		this.preOrder = preOrder;
-	}
 
 	public String getRefSku() {
 		return refSku;
@@ -436,13 +424,6 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 		this.title = title;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	public String getSeUrl() {
 		return seUrl;
@@ -476,5 +457,143 @@ public class Product extends SalesManagerEntity<Long, Product> implements Audita
 		this.metatagDescription = metatagDescription;
 	}
 
+	public boolean isProduct_is_free_shipping() {
+		return product_is_free_shipping;
+	}
+
+	public void setProduct_is_free_shipping(boolean product_is_free_shipping) {
+		this.product_is_free_shipping = product_is_free_shipping;
+	}
+
+	public Integer getStock_quantity() {
+		return stock_quantity;
+	}
+
+	public void setStock_quantity(Integer stock_quantity) {
+		this.stock_quantity = stock_quantity;
+	}
+
+	public boolean isDisplay_stock_availability() {
+		return display_stock_availability;
+	}
+
+	public void setDisplay_stock_availability(boolean display_stock_availability) {
+		this.display_stock_availability = display_stock_availability;
+	}
+
+	public boolean isDisplay_stock_qty() {
+		return display_stock_qty;
+	}
+
+	public void setDisplay_stock_qty(boolean display_stock_qty) {
+		this.display_stock_qty = display_stock_qty;
+	}
+
+	public Integer getMinimum_stock_qty() {
+		return minimum_stock_qty;
+	}
+
+	public void setMinimum_stock_qty(Integer minimum_stock_qty) {
+		this.minimum_stock_qty = minimum_stock_qty;
+	}
+
+	public Integer getMinimum_cart_qty() {
+		return minimum_cart_qty;
+	}
+
+	public void setMinimum_cart_qty(Integer minimum_cart_qty) {
+		this.minimum_cart_qty = minimum_cart_qty;
+	}
+
+	public Integer getMaximum_cart_qty() {
+		return maximum_cart_qty;
+	}
+
+	public void setMaximum_cart_qty(Integer maximum_cart_qty) {
+		this.maximum_cart_qty = maximum_cart_qty;
+	}
+
+	public BigDecimal getPrice() {
+		return price;
+	}
+
+	public void setPrice(BigDecimal price) {
+		this.price = price;
+	}
+
+
+	public BigDecimal getOld_price() {
+		return old_price;
+	}
+
+	public void setOld_price(BigDecimal old_price) {
+		this.old_price = old_price;
+	}
+
+	public BigDecimal getProduct_cost() {
+		return product_cost;
+	}
+
+	public void setProduct_cost(BigDecimal product_cost) {
+		this.product_cost = product_cost;
+	}
+
+	public boolean isDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(boolean discount) {
+		this.discount = discount;
+	}
+
+	public float getPercent_discount() {
+		return percent_discount;
+	}
+
+	public void setPercent_discount(float percent_discount) {
+		this.percent_discount = percent_discount;
+	}
+
+	public BigDecimal getPrice_discount() {
+		return price_discount;
+	}
+
+	public void setPrice_discount(BigDecimal price_discount) {
+		this.price_discount = price_discount;
+	}
+
+	public String getShort_description() {
+		return short_description;
+	}
+
+	public void setShort_description(String short_description) {
+		this.short_description = short_description;
+	}
+
+	public String getFull_description() {
+		return full_description;
+	}
+
+	public void setFull_description(String full_description) {
+		this.full_description = full_description;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public boolean isFeature() {
+		return feature;
+	}
+
+	public void setFeature(boolean feature) {
+		this.feature = feature;
+	}
+
+	
 
 }

@@ -49,9 +49,10 @@ public class ProductImagesController {
 		return new ResponseEntity<GenericResponse>(new GenericResponse("success"), HttpStatus.OK);
 	}
 	@GetMapping("/admin/product-image/test")
-	public ResponseEntity<Message>  tt(){
+	public ResponseEntity<Message>  tt() throws IOException{
+		uploadImageBean.deleteProductImage("d19efdf7-8e4b-4702-917e-f00198cf58d5.jpg");
 		Message m=new Message("aaaa",Type.DANGER);
-		 return new ResponseEntity<Message>(m, HttpStatus.OK);
+		return new ResponseEntity<Message>(m, HttpStatus.OK);
 		
 	}
 }

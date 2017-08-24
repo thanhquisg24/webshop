@@ -1,6 +1,10 @@
 package com.shopping.web.utils;
 
 import java.awt.image.BufferedImage;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,11 +14,6 @@ import javax.imageio.ImageIO;
 
 import net.coobird.thumbnailator.Thumbnails;
 
-
-
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,11 +34,6 @@ public class UploadImageBean {
 		 //File imageDestination = new File(productImageDirectory);
 		UUID newFilenameBase= UUID.randomUUID();
 		InputStream input= file.getInputStream();
-		if(file!=null){
-			System.out.println("aaaabbbb");
-		}else{
-			System.out.println("zzzzzzz");
-		}
 		String newFilename=String.format("%s.jpg", newFilenameBase);
 		BufferedImage imBuff = ImageIO.read(input);
 		saveProfileImage(imBuff,newFilename);
@@ -78,9 +72,51 @@ public class UploadImageBean {
 		 
 	}
 	
+	public void deleteProductImage(String image_name) throws IOException{//temp.jpg
+		
+		String spilit_name=FilenameUtils.getBaseName(image_name);
+		System.out.println(spilit_name);
+		this.copyAndDeleteImage(image_name);
+	   
+		
+		String smallImage=String.format("%s-large.jpg", spilit_name);
+		this.copyAndDeleteImage(smallImage);
+		
+		
+		String mediumImage= String.format("%s-medium.jpg", spilit_name);
+		this.copyAndDeleteImage(mediumImage);
+		
+		String largeImage=String.format("%s-small.jpg", spilit_name);
+		this.copyAndDeleteImage(largeImage);
+		
+		
+		
+	}
+	private void copyAndDeleteImage(String image_name) throws IOException{
+		
+	    File imageSource= new File(productImageDirectory + image_name);
+		File imageCopyTo= new File(productImage_deleteDirectory + image_name);
+		this.copyTo(imageSource,imageCopyTo);
+		this.deleteFile(imageSource);
+		
+	}
+	
+	
 	 private void saveProfileImage(BufferedImage bufferedImage, String filename) throws IOException {
-
+		 	
 	        File imageDestination = new File(productImageDirectory + filename);
 	        ImageIO.write(bufferedImage, "jpg", imageDestination);
 	    }
+	 
+	 
+	 
+	 
+	 private void deleteFile(File file){
+		 file.delete();
+	 }
+	 
+	 private void copyTo(File source, File dest) throws IOException{
+		 FileUtils.copyFile(source, dest);
+
+	 }
 }
