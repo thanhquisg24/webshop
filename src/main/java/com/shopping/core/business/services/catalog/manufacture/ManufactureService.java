@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 
+
 import com.shopping.core.business.exception.ServiceException;
 import com.shopping.core.model.catalog.product.manufacturer.Manufacturer;
 
@@ -43,5 +44,7 @@ public interface ManufactureService {
 	 */
 	List<Manufacturer> listByProductsByCategoriesId(
 			List<Long> ids) throws ServiceException;
+
+	List<Manufacturer> findAll();
 	
 }

@@ -11,7 +11,7 @@ import com.shopping.core.business.exception.ServiceException;
 import com.shopping.core.model.catalog.product.Product;
 import com.shopping.core.model.catalog.product.attribute.ProductAttribute;
 
-//@Service("productAttributeService")
+@Service("productAttributeService")
 public class ProductAttributeServiceImpl /* implements ProductAttributeService*/ {
 	/*
 	private ProductAttributeRepository productAttributeRepository;

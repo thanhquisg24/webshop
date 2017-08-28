@@ -20,7 +20,7 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 @Configuration
-@ComponentScan(basePackages = { "com.shopping.web","com.shopping.web.utils" })
+@ComponentScan(basePackages = { "com.shopping.web","com.shopping.web.utils","com.shopping.web.validator" })
 @EnableWebMvc
 public class MvcConfig extends WebMvcConfigurerAdapter {
 

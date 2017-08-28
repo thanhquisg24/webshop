@@ -5,12 +5,13 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-
 import org.springframework.validation.Validator;
 
 import com.shopping.web.admin.dto.ProductImageDTO;
 
+@Component
 public class ProductImageDTOValidator implements Validator{
 
 	private Long imageMaxSize= (long) (2 * 1024 * 1024);//2MB

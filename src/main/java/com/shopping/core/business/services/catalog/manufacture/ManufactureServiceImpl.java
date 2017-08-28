@@ -73,5 +73,11 @@ public class ManufactureServiceImpl implements ManufactureService {
 		// TODO Auto-generated method stub
 		return repository.findOne(id);
 	}
+
+	@Override
+	public List<Manufacturer> findAll() {
+		// TODO Auto-generated method stub
+		return repository.findAll();
+	}
 	
 }

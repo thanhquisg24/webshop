@@ -8,7 +8,7 @@ import java.util.Set;
  *
  */
 public class ProductDTO {
-	private Long id;
+	private Long id = (long) 0;
 	
 	/*Mapping*/
 	private Set<Integer> categories;
@@ -22,6 +22,7 @@ public class ProductDTO {
 	private String full_description;
 	private Integer sortOrder = new Integer(0);
 	private boolean active =false;
+	private boolean feature=false;
 	/*end product info*/
 	
 	/*price*/
@@ -237,6 +238,37 @@ public class ProductDTO {
 	}
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+	
+	public boolean isFeature() {
+		return feature;
+	}
+	public void setFeature(boolean feature) {
+		this.feature = feature;
+	}
+	@Override
+	public String toString() {
+		return "ProductDTO [id=" + id + ", categories=" + categories
+				+ ", manufacture_id=" + manufacture_id + ", sku=" + sku
+				+ ", name=" + name + ", short_description=" + short_description
+				+ ", full_description=" + full_description + ", sortOrder="
+				+ sortOrder + ", active=" + active + ", price=" + price
+				+ ", old_price=" + old_price + ", product_cost=" + product_cost
+				+ ", price_discount=" + price_discount + ", percent_discount="
+				+ percent_discount + ", discount=" + discount
+				+ ", stock_quantity=" + stock_quantity
+				+ ", display_stock_availability=" + display_stock_availability
+				+ ", display_stock_qty=" + display_stock_qty
+				+ ", minimum_stock_qty=" + minimum_stock_qty
+				+ ", minimum_cart_qty=" + minimum_cart_qty
+				+ ", maximum_cart_qty=" + maximum_cart_qty
+				+ ", product_is_free_shipping=" + product_is_free_shipping
+				+ ", productLength=" + productLength + ", productWidth="
+				+ productWidth + ", productHeight=" + productHeight
+				+ ", productWeight=" + productWeight + ", seUrl=" + seUrl
+				+ ", metatagTitle=" + metatagTitle + ", metatagKeywords="
+				+ metatagKeywords + ", metatagDescription="
+				+ metatagDescription + "]";
 	}
 	
 	
