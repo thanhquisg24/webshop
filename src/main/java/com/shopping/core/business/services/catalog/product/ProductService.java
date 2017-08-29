@@ -1,5 +1,6 @@
 package com.shopping.core.business.services.catalog.product;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.shopping.core.business.exception.ServiceException;
@@ -46,6 +47,10 @@ public interface ProductService {
 	boolean exists(String sku);
 
 	Product saveOrUpdate(Product persist);
+
+	void delete(Product product) throws ServiceException, IOException;
+
+	void delete(Long id) throws ServiceException, IOException;
 
 	
 }

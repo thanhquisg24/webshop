@@ -1,7 +1,7 @@
 package com.shopping.web.admin.controller.products;
 
+import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,6 +33,7 @@ import com.shopping.core.model.catalog.category.Category;
 import com.shopping.core.model.catalog.product.Product;
 import com.shopping.core.model.catalog.product.manufacturer.Manufacturer;
 import com.shopping.web.admin.dto.ProductDTO;
+import com.shopping.web.admin.dto.ProductImageDTO;
 import com.shopping.web.support.Message;
 import com.shopping.web.support.MessageHelper;
 import com.shopping.web.support.UserSessionHelper;
@@ -69,8 +71,68 @@ public class ProductController {
 		return displayProduct(null,model,request,response);
 
 	}
+	@RequestMapping(value="/admin/product/editProduct", method=RequestMethod.GET)
+	public String editProduct(@RequestParam("id") Long id,Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		return displayProduct(id,model,request,response);
+
+	}
 	private String displayProduct(Long productId, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ProductDTO dto=new ProductDTO();
+		if(productId!=null){
+			Product pro=productService.getProduct(productId);
+			//mapping dto data
+			if( pro!=null){
+				/*info*/
+				dto.setId(pro.getId());
+				dto.setName(pro.getName());
+				dto.setSku(pro.getSku());
+				dto.setShort_description(pro.getShort_description());
+				dto.setFull_description(pro.getFull_description());
+				dto.setFeature(pro.isFeature());
+				/*end info*/
+				/*pices*/
+				dto.setPrice(pro.getPrice());
+				dto.setOld_price(pro.getOld_price());
+				dto.setProduct_cost(pro.getProduct_cost());
+				dto.setDiscount(pro.isDiscount());
+				dto.setPercent_discount(pro.getPercent_discount());
+				dto.setPrice_discount(pro.getPrice_discount());
+				
+				/*end prices*/
+				/*inventory*/
+				dto.setStock_quantity(pro.getStock_quantity());
+				dto.setDisplay_stock_availability(pro.isDisplay_stock_availability());
+				dto.setDisplay_stock_qty(pro.isDisplay_stock_qty());
+				dto.setMinimum_stock_qty(pro.getMinimum_stock_qty());
+				dto.setMinimum_cart_qty(pro.getMinimum_cart_qty());
+				dto.setMaximum_cart_qty(pro.getMaximum_cart_qty());
+				
+				/*end inventory*/
+				/*shipping*/
+				dto.setProductWidth(pro.getProductWidth());
+				dto.setProductHeight(pro.getProductHeight());
+				dto.setProductLength(pro.getProductLength());
+				dto.setProductWeight(pro.getProductWeight());
+				dto.setProduct_is_free_shipping(pro.isProduct_is_free_shipping());
+				/*end shipping*/
+				/*mapping*/
+				
+				dto.setManufacture_id(pro.getManufacturer().getId());
+				Set<Integer> setCatetmp=new HashSet<Integer>();
+				 for (Category c : pro.getCategories()) {
+					 setCatetmp.add(c.getId());
+				    }
+			
+				 dto.setCategories(setCatetmp);
+				/*end mapping*/
+				/*seo*/
+				dto.setMetatagTitle(pro.getMetatagTitle());
+				dto.setMetatagDescription(pro.getMetatagDescription());
+				dto.setMetatagKeywords(pro.getMetatagKeywords());
+				dto.setSeUrl(pro.getSeUrl());
+				/*end seo*/
+			}
+		}
 		AddAtributeIntoForm(model);
 		model.addAttribute("productDTO", dto);
 		return "admin/catalogue/product/form";
@@ -174,5 +236,20 @@ public class ProductController {
 			//System.out.println(productDTO.toString());
 			//return "admin/catalogue/product/form";
 	}
+	
+	@PostMapping("/admin/product/delete")
+	@ResponseBody
+	public ResponseEntity<GenericResponse> delete(@RequestParam("id") Long id) throws IOException, ServiceException{
+		if(productService.exists(id)){
+			productService.delete(id);
+		}
+		else{
+			return new ResponseEntity<GenericResponse>(new GenericResponse("Product is not exists!"), HttpStatus.CONFLICT);
+		}
+		//return new ResponseEntity<GenericResponse>(new GenericResponse("Product is not exists!"), HttpStatus.CONFLICT);
+		return new ResponseEntity<GenericResponse>(new GenericResponse("success"), HttpStatus.OK);
+	}
+	
+	
 
 }

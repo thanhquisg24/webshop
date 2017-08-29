@@ -1,9 +1,11 @@
 package com.shopping.core.business.services.catalog.product;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
-
 import java.util.Set;
+
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,12 @@ import com.shopping.core.business.services.catalog.category.CategoryService;
 import com.shopping.core.business.services.catalog.product.attribute.ProductAttributeService;
 import com.shopping.core.business.services.catalog.product.attribute.ProductOptionService;
 import com.shopping.core.business.services.catalog.product.attribute.ProductOptionValueService;
+import com.shopping.core.business.services.catalog.product.image.ProductImageService;
 import com.shopping.core.model.catalog.category.Category;
 import com.shopping.core.model.catalog.product.Product;
 import com.shopping.core.model.catalog.product.ProductCriteria;
 import com.shopping.core.model.catalog.product.ProductList;
+import com.shopping.core.model.catalog.product.image.ProductImage;
 
 
 @Service("productService")
@@ -49,12 +53,12 @@ public class ProductServiceImpl  implements ProductService {
 	
 	@Autowired
 	SearchService searchService;
-	
+	*/
 	@Autowired
 	ProductImageService productImageService;
-	
+	/*
 	@Autowired
-	CoreConfiguration configuration;*/
+	CoreConfiguration configuration;
 	
 	/*@Inject
 	ProductReviewService productReviewService;*/
@@ -138,12 +142,12 @@ public class ProductServiceImpl  implements ProductService {
 
 
 	
-/*
+
 	@Override
-	public void delete(Product product) throws ServiceException {
+	public void delete(Product product) throws ServiceException, IOException {
 		LOGGER.debug("Deleting product");
 		Validate.notNull(product, "Product cannot be null");
-		Validate.notNull(product.getMerchantStore(), "MerchantStore cannot be null in product");
+
 		product = this.getById(product.getId());//Prevents detached entity error
 		product.setCategories(null);
 		
@@ -156,22 +160,22 @@ public class ProductServiceImpl  implements ProductService {
 		product.setImages(null);
 		
 		//delete reviews
-		List<ProductReview> reviews = productReviewService.getByProductNoCustomers(product);
+		/*List<ProductReview> reviews = productReviewService.getByProductNoCustomers(product);
 		for(ProductReview review : reviews) {
 			productReviewService.delete(review);
 		}
-		
+		*/
 		//related - featured
-		List<ProductRelationship> relationships = productRelationshipService.listByProduct(product);
+		/*List<ProductRelationship> relationships = productRelationshipService.listByProduct(product);
 		for(ProductRelationship relationship : relationships) {
 			productRelationshipService.delete(relationship);
-		}
+		}*/
 		
-		super.delete(product);
-		searchService.deleteIndex(product.getMerchantStore(), product);
+		productRepository.delete(product);
+		//searchService.deleteIndex(product.getMerchantStore(), product);
 		
 	}
-	*/
+	
 	@Override
 	public Product create(Product product) throws ServiceException {
 		return productRepository.saveAndFlush(product);
@@ -199,6 +203,36 @@ public class ProductServiceImpl  implements ProductService {
 	public boolean exists(String sku) {
 		// TODO Auto-generated method stub
 		return productRepository.existsSKU(sku);
+	}
+
+	@Override
+	public void delete(Long id) throws ServiceException , IOException{
+		Product product = this.getById(id);//Prevents detached entity error
+		product.setCategories(null);
+		
+		Set<ProductImage> images = product.getImages();
+		
+		for(ProductImage image : images) {
+			productImageService.removeProductImage(image);
+		}
+		
+		product.setImages(null);
+		
+		//delete reviews
+		/*List<ProductReview> reviews = productReviewService.getByProductNoCustomers(product);
+		for(ProductReview review : reviews) {
+			productReviewService.delete(review);
+		}
+		*/
+		//related - featured
+		/*List<ProductRelationship> relationships = productRelationshipService.listByProduct(product);
+		for(ProductRelationship relationship : relationships) {
+			productRelationshipService.delete(relationship);
+		}*/
+		
+		productRepository.delete(product);
+		//searchService.deleteIndex(product.getMerchantStore(), product);
+		
 	}
 
 	

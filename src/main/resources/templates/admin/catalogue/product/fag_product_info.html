@@ -1,0 +1,364 @@
+ <div class="tab-pane active" id="product_info" th:fragment="product_info">
+<form novalidate="novalidate" id="frm-product" th:object="${productDTO}"
+												th:action="@{admin/product/save}" method="post"
+												class="form-horizontal">
+													<input class="form-control " type="hidden" th:field="*{id}"> 
+												<div class="row">
+													<div class="col-md-7">
+														<!-- panel -->
+														<div class="panel panel-default">
+															<div class="panel-heading border-light">
+																<h4 class="panel-title">General information</h4>
+
+															</div>
+															<div class="panel-body">
+																<div class="form-group">
+																			<label class="control-label col-md-3" for="Sku" title="">SKU</label>
+																
+																	<div class="col-md-9">
+																		<input class="form-control " type="text" th:field="*{sku}"> 
+																		<span  th:if="${#fields.hasErrors('sku')}"  th:errors="*{sku}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+																	
+																			<label class="control-label col-md-3" for="Name" title="">Product
+																				name</label>
+																	
+																	<div class="col-md-9">
+																		<input class="form-control"  type="text" th:field="*{name}">
+																		<span  th:if="${#fields.hasErrors('name')}"  th:errors="*{name}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+																
+																			<label class="control-label col-md-3" for="ShortDescription"
+																				title="">Short description</label>
+															
+																	<div class="col-md-9">
+																		<textarea class="form-control" cols="20" th:field="*{short_description}"
+																			rows="4"></textarea>
+																	
+																	</div>
+																</div>
+																<div class="form-group">
+															
+																			<label class="control-label col-md-3" for="ShortDescription"
+																				title="">Full description</label>
+																	
+																	<div class="col-md-9">
+																		<textarea class="form-control" cols="20"
+																			th:field="*{full_description}"
+																			rows="4"></textarea>
+																	
+																	</div>
+																</div>
+																<div class="form-group ">
+														
+																			<label class="control-label col-md-3" for="Published" title="">Is feature</label>
+																
+																	<div class="col-md-9">
+																		<input class="check-box" type="checkbox"  	th:field="*{feature}">
+																	</div>
+																</div>
+																<div class="form-group ">
+														
+																			<label class="control-label col-md-3" for="Published" title="">Published</label>
+																
+																	<div class="col-md-9">
+																		<input class="check-box" type="checkbox"  	th:field="*{active}">
+																	</div>
+																</div>
+																<!-- Text input-->
+																<div class="form-group">
+																	<label class="col-md-3 control-label" for="sort_order">Display
+																		order</label>
+																	<div class="col-md-4">
+																		<input th:field="*{sortOrder}"
+																			type="number" class="form-control input-sm">
+																			<span  th:if="${#fields.hasErrors('sortOrder')}"  th:errors="*{sortOrder}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+
+
+															</div>
+														</div>
+														<!-- end panel -->
+
+														<!-- panel -->
+														<div class="panel panel-default">
+															<div class="panel-heading border-light">
+																<h4 class="panel-title">Prices</h4>
+
+															</div>
+															<div class="panel-body">
+																<div class="form-group">
+																
+																			<label class="control-label col-md-3" for="Sku" title="">Price</label>
+																
+																	<div class="col-md-9">
+																		<input class="form-control " type="number" th:field="*{price}" > 
+																		<span  th:if="${#fields.hasErrors('price')}"  th:errors="*{price}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+																	
+																			<label class="control-label col-md-3" for="Sku" title="">Old price</label>
+																	
+																	<div class="col-md-9">
+																		<input class="form-control " type="number" th:field="*{old_price}"> 
+																		<span  th:if="${#fields.hasErrors('old_price')}"  th:errors="*{old_price}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+														
+																	<label class="control-label col-md-3" for="Sku" title="">Product cost</label>
+															
+																	<div class="col-md-9">
+																		<input class="form-control " type="number" th:field="*{product_cost}" > 
+																		<span  th:if="${#fields.hasErrors('product_cost')}"  th:errors="*{product_cost}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+																	
+																			<label class="control-label col-md-3" for="Sku" title="">Is discount</label>
+																	
+																	<div class="col-md-9">
+																		<input type="checkbox" th:field="*{discount}" > 
+																	</div>
+																</div>
+																<div class="form-group">
+															
+																			<label class="control-label col-md-3" for="Sku" title="">Percent Discount</label>
+															
+																	<div class="col-md-9">
+																		<input class="form-control " type="number" th:field="*{percent_discount}"> 
+																			<span  th:if="${#fields.hasErrors('percent_discount')}"  th:errors="*{percent_discount}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+											
+																			<label class="control-label col-md-3" for="Sku" title="">Price after Discount</label>
+																	
+																	<div class="col-md-9">
+																		<input class="form-control " type="number" th:field="*{price_discount}"> 
+																			<span  th:if="${#fields.hasErrors('price_discount')}"  th:errors="*{price_discount}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- end panel -->
+														
+																				<!-- panel -->
+														<div class="panel panel-default">
+															<div class="panel-heading border-light">
+																<h4 class="panel-title">SEO</h4>
+
+															</div>
+															<div class="panel-body">
+																<div class="form-group">
+																			<label class="control-label col-md-3" for="Sku" title="">Meta Title</label>
+																
+																	<div class="col-md-9">
+																		<input class="form-control " type="text" th:field="*{metatagTitle}"> 
+																	</div>
+																</div>
+																<div class="form-group">
+																	
+																			<label class="control-label col-md-3" for="Name" title="">seoUrl
+																				</label>
+																	
+																	<div class="col-md-9">
+																		<input class="form-control"  type="text" th:field="*{seUrl}">
+																	</div>
+																</div>
+																<div class="form-group">
+																
+																			<label class="control-label col-md-3" for="metatagDescription"
+																				title="">metatagDescription</label>
+															
+																	<div class="col-md-9">
+																		<textarea class="form-control" cols="20" th:field="*{metatagDescription}"
+																			rows="4"></textarea>
+																	
+																	</div>
+																</div>
+																<div class="form-group">
+															
+																			<label class="control-label col-md-3" for="ShortDescription"
+																				title="">Key word</label>
+																	
+																	<div class="col-md-9">
+																		<input type="text" class="form-control" th:field="*{metatagKeywords}">
+																	
+																	</div>
+																</div>
+											
+															</div>
+														</div>
+														<!-- end panel -->
+													</div>
+													<!-- end col-md-7 -->
+
+													<div class="col-md-5">
+														<!-- panel -->
+														<div class="panel panel-default">
+															<div class="panel-heading border-light">
+																<h4 class="panel-title">Inventory</h4>
+
+															</div>
+															<div class="panel-body">
+																			<div class="form-group">	
+																			<label class="control-label col-md-3" for="Sku" title="">Stock quantity</label>
+																	
+																	<div class="col-md-9">
+																		<input class="form-control " type="number"  th:field="*{stock_quantity}"> 
+																		<span  th:if="${#fields.hasErrors('stock_quantity')}"  th:errors="*{stock_quantity}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+																
+																			<label class="control-label col-md-3" for="Sku" title="">Display availability</label>
+																
+																	<div class="col-md-9">
+																		<input  type="checkbox" th:field="*{display_stock_availability}"> 
+																	</div>
+																</div>
+																<div class="form-group">
+																	
+																			<label class="control-label col-md-3" for="Sku" title="">Display stock qty</label>
+																	
+																	<div class="col-md-9">
+																		<input  type="checkbox" th:field="*{display_stock_qty}"> 
+																	</div>
+																</div>
+																<div class="form-group">
+														
+																			<label class="control-label col-md-3" for="Sku" title="">Minimum stock qty</label>
+																	
+																	<div class="col-md-9">
+																			<input class="form-control " type="number"  th:field="*{minimum_stock_qty}"> 
+																		<span  th:if="${#fields.hasErrors('minimum_stock_qty')}"  th:errors="*{minimum_stock_qty}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+														
+																			<label class="control-label col-md-3" for="Sku" title="">Minimum cart qty</label>
+																
+																	<div class="col-md-9">
+																			<input class="form-control " type="number"  th:field="*{minimum_cart_qty}"> 
+																		<span  th:if="${#fields.hasErrors('minimum_cart_qty')}"  th:errors="*{minimum_cart_qty}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+																
+																			<label class="control-label col-md-3" for="Sku" title="">Maximum cart qty</label>
+																	
+																	<div class="col-md-9">
+																			<input class="form-control " type="number"  th:field="*{maximum_cart_qty}"> 
+																		<span  th:if="${#fields.hasErrors('maximum_cart_qty')}"  th:errors="*{maximum_cart_qty}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- end panel -->
+														<!-- panel -->
+														<div class="panel panel-default">
+															<div class="panel-heading border-light">
+																<h4 class="panel-title">Shipping</h4>
+
+															</div>
+															<div class="panel-body">
+																<div class="form-group">
+														
+																			<label class="control-label col-md-3" for="Sku" title="">Width</label>
+															
+																	<div class="col-md-9">
+																		<input class="form-control " type="number"  th:field="*{productWidth}"> 
+																		<span  th:if="${#fields.hasErrors('productWidth')}"  th:errors="*{productWidth}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+															
+																			<label class="control-label col-md-3" for="Sku" title="">Height</label>
+																	
+																	<div class="col-md-9">
+																		<input class="form-control " type="number"  th:field="*{productHeight}"> 
+																		<span  th:if="${#fields.hasErrors('productHeight')}"  th:errors="*{productHeight}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+																
+																			<label class="control-label col-md-3" for="Sku" title="">Length</label>
+																	
+																	<div class="col-md-9">
+																	<input class="form-control " type="number"  th:field="*{productLength}"> 
+																		<span  th:if="${#fields.hasErrors('productLength')}"  th:errors="*{productLength}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+														
+																			<label class="control-label col-md-3" for="Sku" title="">Weight</label>
+																
+																	<div class="col-md-9">
+																	<input class="form-control " type="number"  th:field="*{productWeight}"> 
+																		<span  th:if="${#fields.hasErrors('productWeight')}"  th:errors="*{productWeight}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+																
+																			<label class="control-label col-md-3" for="Sku" title="">Free shipping</label>
+																
+																	<div class="col-md-9">
+																			<input  type="checkbox" th:field="*{product_is_free_shipping}"> 
+																	</div>
+																</div>
+																
+															</div>
+														</div>
+														<!-- end panel -->
+
+														<!-- panel -->
+														<div class="panel panel-default">
+															<div class="panel-heading border-light">
+																<h4 class="panel-title">Mappings</h4>
+
+															</div>
+															<div class="panel-body">
+																<div class="form-group">
+																
+																			<label class="control-label col-md-3" for="Sku" title="">Categories</label>
+															
+																	<div class="col-md-9">
+																		 <select id="sl2category"  th:field="*{categories}"  class="form-control select2-multiple" multiple>
+																		 		  <option th:each="category : ${categorieslist}" 
+																		          th:value="${category.id}" 
+																		         
+																		          th:text="${category.breadcrumb}">Wireframe</option>
+																		 </select>
+																		<span  th:if="${#fields.hasErrors('categories')}"  th:errors="*{categories}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+																<div class="form-group">
+																	
+																			<label class="control-label col-md-3" for="Sku" title="">Manufacturer</label>
+																		
+																	<div class="col-md-9">
+																		 <select class="form-control"  th:field="*{manufacture_id}" th:errorclass="field-error">
+																		  <option th:each="manufacturer : ${manufacturers}" 
+																		          th:value="${manufacturer.id}" 
+																		          th:selected="(${manufacturer.id} == *{manufacture_id})" 
+																		          th:text="${manufacturer.name}">Wireframe</option>
+																		</select>
+																		<span  th:if="${#fields.hasErrors('manufacture_id')}"  th:errors="*{manufacture_id}"  class="help-block text-red"></span>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<!-- end panel -->
+													</div>
+													<!-- end col-md-5 -->
+													</div><!-- end row -->
+											</form>
+					</div>						
+											
