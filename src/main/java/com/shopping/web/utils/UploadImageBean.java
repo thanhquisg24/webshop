@@ -30,7 +30,7 @@ public class UploadImageBean {
 	 
 	 
 	 
-	public void processProductImage(MultipartFile file) throws IOException{
+	public String processProductImage(MultipartFile file) throws IOException{
 		 //File imageDestination = new File(productImageDirectory);
 		UUID newFilenameBase= UUID.randomUUID();
 		InputStream input= file.getInputStream();
@@ -69,6 +69,7 @@ public class UploadImageBean {
                         .asBufferedImage();
 		saveProfileImage(bufferedSmallImage,newSmallFilename);
 		
+		return newFilename;
 		 
 	}
 	

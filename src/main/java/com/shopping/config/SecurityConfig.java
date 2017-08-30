@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	            .authorizeRequests()
 	                .antMatchers("/invalidSession*").anonymous()
 	                .antMatchers("/user/updatePassword*","/user/savePassword*","/updatePassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
-	                .antMatchers("/admin*").hasAuthority("ADMIN")
+	                .antMatchers("/admin**","/admin/**").hasAuthority("ADMIN")
 	                
 	                .and()
 	            .formLogin()

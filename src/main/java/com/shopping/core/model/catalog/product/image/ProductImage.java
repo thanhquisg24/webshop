@@ -31,7 +31,6 @@ public class ProductImage extends SalesManagerEntity<Long, ProductImage> {
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "TABLE_GEN")
 	private Long id;
 
-	@NotEmpty
 	@Column(name="NAME", nullable = false, length=120)
 	private String name;
 	

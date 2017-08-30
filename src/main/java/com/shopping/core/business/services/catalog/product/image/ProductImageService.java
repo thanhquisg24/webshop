@@ -33,6 +33,9 @@ public interface ProductImageService {
 	 */
 	List<ProductImage> getProductImages(Product product)
 			throws ServiceException;
+	
+	List<ProductImage> getProductImages(Long product_id)
+			throws ServiceException;
 
 	void removeProductImage(ProductImage productImage) throws ServiceException, IOException;
 

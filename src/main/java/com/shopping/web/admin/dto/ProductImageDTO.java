@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductImageDTO {
 
 	private Long id;
+	private Long productId;
 	private String name;
 	private String title;
 	private String productImage;
@@ -61,6 +62,12 @@ public class ProductImageDTO {
 	}
 	public void setFile(MultipartFile file) {
 		this.file = file;
+	}
+	public Long getProductId() {
+		return productId;
+	}
+	public void setProductId(Long productId) {
+		this.productId = productId;
 	}
 	
 	
