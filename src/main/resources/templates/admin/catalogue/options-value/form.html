@@ -34,6 +34,7 @@
 	href="vendors/jvectormap/jquery-jvectormap.css" />
 
 <link href="vendors/jasny-bootstrap/css/jasny-bootstrap.css" rel="stylesheet">
+<link href="vendors/jquery-colorpickersliders/jquery-colorpickersliders/jquery.colorpickersliders.css" rel="stylesheet" type="text/css" media="all">
 <link href="css/text.css" rel="stylesheet">
 <!--end of page level css-->
 </head>
@@ -77,9 +78,16 @@
 							<div class="panel-body">
 							
 									<fieldset class="form-horizontal">
+									<div class="form-group">
+											<label class="col-md-4 control-label" for="name">Specify color</label>
+											<div class="col-md-8">
+												<input type="text" class="onchange-example"> 
+												<input type="checkbox" id="idSpecifyColor" > 
+											</div>
+										</div>
 									<!-- Text input-->
 										<div class="form-group">
-											<label class="col-md-4 control-label" for="name">Code*</label>
+											<label class="col-md-4 control-label" for="name">Code value(a-z0-9)*</label>
 											<div class="col-md-8">
 												<input th:field="*{code}"
 													class="form-control input-md" required="">
@@ -120,7 +128,7 @@
 												order</label>
 											<div class="col-md-4">
 												<input id="sort_order"  th:field="*{productOptionValueSortOrder}" type="number" 
-													 class="form-control input-sm">
+													 class="form-control input-sm" value="0">
 
 											</div>
 										</div>
@@ -144,7 +152,39 @@
 	<!-- begining of page level js -->
 	<!--  todolist-->
 	<script src="vendors/jasny-bootstrap/js/jasny-bootstrap.js"></script>
-	<script type="text/javascript"></script>
+	<script src="vendors/jquery-colorpickersliders/libraries/tinycolor.js"></script>
+	<script src="vendors/jquery-colorpickersliders/jquery-colorpickersliders/jquery.colorpickersliders.js"></script>
+	
+	<script type="text/javascript">
+	  $("input.onchange-example").ColorPickerSliders({
+	        order: {
+	            hsl: 1
+	        },
+	        onchange: function(container, color) {
+	            var span = $("#code");
+	            if($('#idSpecifyColor').is(':checked')){
+	            	span.val(color.tiny.toRgbString());
+	  		    } else {
+	  		    	span.val("");
+	  		    }
+	            //span.css("background-color", color.tiny.toRgbString());
+				//span.val(color.tiny.toRgbString());
+	           /* if (color.cielch.l < 60) {
+	                span.css("color", "white");
+	            } else {
+	                span.css("color", "black");
+	            }*/
+	        }
+	    });
+	  $("#idSpecifyColor").change(function(){
+          var span = $("#code");
+		  if($('#idSpecifyColor').is(':checked')){
+			  span.val( $("input.onchange-example").val());
+		    } else {
+		    	span.val("");
+		    }
+	  });
+	</script>
 
 
 	<!-- end of page level js -->

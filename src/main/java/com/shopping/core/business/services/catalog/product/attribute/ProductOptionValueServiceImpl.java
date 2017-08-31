@@ -100,6 +100,12 @@ public class ProductOptionValueServiceImpl implements
 		return productOptionValueRepository.findByName( option_val_name,pageRequest);
 	}
 
+	@Override
+	public List<ProductOptionValue> listAll() {
+		// TODO Auto-generated method stub
+		return productOptionValueRepository.findAll();
+	}
+
 
 
 }

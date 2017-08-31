@@ -41,6 +41,8 @@ public interface ProductImageService {
 
 	void saveOrUpdate(ProductImage productImage) throws ServiceException;
 
+	ProductImage getImage(Long imageId);
+
 	/**
 	 * Returns an image file from required identifier. This method is
 	 * used by the image servlet

@@ -15,9 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,16 +22,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shopping.core.business.exception.ServiceException;
 import com.shopping.core.business.services.catalog.category.CategoryService;
 import com.shopping.core.business.services.catalog.manufacture.ManufactureService;
 import com.shopping.core.business.services.catalog.product.ProductService;
+import com.shopping.core.business.services.catalog.product.attribute.ProductOptionService;
+import com.shopping.core.business.services.catalog.product.attribute.ProductOptionValueService;
 import com.shopping.core.model.catalog.category.Category;
 import com.shopping.core.model.catalog.product.Product;
-import com.shopping.core.model.catalog.product.manufacturer.Manufacturer;
 import com.shopping.web.admin.dto.ProductDTO;
-import com.shopping.web.admin.dto.ProductImageDTO;
-import com.shopping.web.support.Message;
 import com.shopping.web.support.MessageHelper;
 import com.shopping.web.support.UserSessionHelper;
 import com.shopping.web.utils.GenericResponse;
@@ -51,16 +49,24 @@ public class ProductController {
 		
 		@Autowired
 		private ProductService productService;
+		
+		@Autowired
+		ProductOptionService productOptionService;
+		
+		@Autowired
+		ProductOptionValueService productOptionValueService;
 	  @Autowired
 	   private ProductDTOValidator validator;
 	   
 
 	   
-		private void AddAtributeIntoForm(Model model) throws ServiceException{
+		private void AddAtributeIntoForm(Model model) throws ServiceException, JsonProcessingException{
 		
 			model.addAttribute("manufacturers", manufactureService.findAll());
 			model.addAttribute("categorieslist", categoryService.listAll());
-
+			ObjectMapper objectMapper = new ObjectMapper();
+			model.addAttribute("optionList",objectMapper.writeValueAsString(productOptionService.listAll()));
+			model.addAttribute("optionValueList",objectMapper.writeValueAsString(productOptionValueService.listAll()));	
 			
 		}
 	   
@@ -139,7 +145,7 @@ public class ProductController {
 
 	}
 	@PostMapping("/admin/product/save")
-	public String  saveProduct(@Valid  ProductDTO  productDTO,BindingResult result, Model model,RedirectAttributes ra,Principal principal) throws ServiceException{
+	public String  saveProduct(@Valid  ProductDTO  productDTO,BindingResult result, Model model,RedirectAttributes ra,Principal principal) throws ServiceException, JsonProcessingException{
 		 //Validation code
 	    validator.validate(productDTO, result);
 	    

@@ -70,4 +70,11 @@ public class ProductImageServiceImpl
 		// TODO Auto-generated method stub
 		return productImageRepository.getImages(product_id);
 	}
+
+
+	@Override
+	public ProductImage getImage(Long imageId) {
+		// TODO Auto-generated method stub
+		return productImageRepository.getOne(imageId);
+	}
 }

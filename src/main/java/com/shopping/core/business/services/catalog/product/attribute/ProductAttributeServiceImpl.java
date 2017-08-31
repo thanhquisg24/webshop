@@ -1,26 +1,30 @@
 package com.shopping.core.business.services.catalog.product.attribute;
 
+
+
+
+
 import java.util.List;
 
-
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shopping.core.business.exception.ServiceException;
-
+import com.shopping.core.business.repositories.catalog.product.attribute.ProductAttributeRepository;
 import com.shopping.core.model.catalog.product.Product;
 import com.shopping.core.model.catalog.product.attribute.ProductAttribute;
 
+
 @Service("productAttributeService")
-public class ProductAttributeServiceImpl /* implements ProductAttributeService*/ {
-	/*
+@Transactional(rollbackFor = com.shopping.core.business.exception.ServiceException.class)
+public class ProductAttributeServiceImpl  implements ProductAttributeService {
+	
+
+	@Autowired
 	private ProductAttributeRepository productAttributeRepository;
 
-	@Inject
-	public ProductAttributeServiceImpl(ProductAttributeRepository productAttributeRepository) {
-		super(productAttributeRepository);
-		this.productAttributeRepository = productAttributeRepository;
-	}
+
 	
 	@Override
 	public ProductAttribute getById(Long id) {
@@ -31,40 +35,37 @@ public class ProductAttributeServiceImpl /* implements ProductAttributeService*/
 	
 	
 	@Override
-	public List<ProductAttribute> getByOptionId(MerchantStore store,
+	public List<ProductAttribute> getByOptionId(
 			Long id) throws ServiceException {
 		
-		return productAttributeRepository.findByOptionId(store.getId(), id);
+		return productAttributeRepository.findByOptionId( id);
 		
 	}
 	
 	@Override
-	public List<ProductAttribute> getByAttributeIds(MerchantStore store,
-			Product product, List<Long> ids) throws ServiceException {
+	public List<ProductAttribute> getByAttributeIds(Product product, List<Long> ids) throws ServiceException {
 		
-		return productAttributeRepository.findByAttributeIds(store.getId(), product.getId(), ids);
+		return productAttributeRepository.findByAttributeIds( product.getId(), ids);
 		
 	}
 	
 	@Override
-	public List<ProductAttribute> getByOptionValueId(MerchantStore store,
-			Long id) throws ServiceException {
+	public List<ProductAttribute> getByOptionValueId(Long id) throws ServiceException {
 		
-		return productAttributeRepository.findByOptionValueId(store.getId(), id);
+		return productAttributeRepository.findByOptionValueId( id);
 		
 	}
 	
 	/**
 	 * Returns all product attributes
 	 */
-	/*
+	
 	@Override
-	public List<ProductAttribute> getByProductId(MerchantStore store,
-			Product product, Language language) throws ServiceException {
-		return productAttributeRepository.findByProductId(store.getId(), product.getId(), language.getId());
+	public List<ProductAttribute> getByProductId(Long productid) throws ServiceException {
+		return productAttributeRepository.findByProductId( productid);
 		
-	}*/
-/*
+	}
+
 
 	@Override
 	public void saveOrUpdate(ProductAttribute productAttribute)
@@ -82,8 +83,8 @@ public class ProductAttributeServiceImpl /* implements ProductAttributeService*/
 		
 		//override method, this allows the error that we try to remove a detached instance
 		attribute = this.getById(attribute.getId());
-		super.delete(attribute);
+		productAttributeRepository.delete(attribute);
 		
 	}
-*/
+
 }

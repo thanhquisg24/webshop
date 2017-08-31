@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.shopping.core.business.exception.ServiceException;
-import com.shopping.core.model.catalog.product.attribute.ProductOption;
+
 import com.shopping.core.model.catalog.product.attribute.ProductOptionValue;
 
 
@@ -25,5 +25,7 @@ public interface ProductOptionValueService  {
 	ProductOptionValue getById(Long optionValueId);
 
 	Page<ProductOptionValue> findAll(String option_val_name, Pageable pageRequest);
+
+	List<ProductOptionValue> listAll();
 
 }

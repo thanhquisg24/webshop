@@ -1,6 +1,5 @@
 package com.shopping.core.model.catalog.product.attribute;
 
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,9 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
-import javax.persistence.Transient;
+
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shopping.core.constants.SchemaConstant;
 import com.shopping.core.model.catalog.product.Product;
 import com.shopping.core.model.generic.SalesManagerEntity;
@@ -29,6 +29,7 @@ import com.shopping.core.model.generic.SalesManagerEntity;
 			})
 	}
 )
+@JsonIgnoreProperties({"product"})
 public class ProductAttribute extends SalesManagerEntity<Long, ProductAttribute> {
 	private static final long serialVersionUID = -6537491946539803265L;
 	
@@ -38,36 +39,14 @@ public class ProductAttribute extends SalesManagerEntity<Long, ProductAttribute>
 	@GeneratedValue(strategy = GenerationType.TABLE, generator = "TABLE_GEN")
 	private Long id;
 
-	
-	@Column(name="PRODUCT_ATRIBUTE_PRICE")
-	private BigDecimal productAttributePrice;
-
 
 	@Column(name="PRODUCT_ATTRIBUTE_SORT_ORD")
 	private Integer productOptionSortOrder;
 	
-	@Column(name="PRODUCT_ATTRIBUTE_FREE")
-	private boolean productAttributeIsFree;
-	
 
-	@Column(name="PRODUCT_ATTRIBUTE_WEIGHT")
-	private BigDecimal productAttributeWeight;
-	
-	@Column(name="PRODUCT_ATTRIBUTE_DEFAULT")
-	private boolean attributeDefault=false;
-	
+
 	@Column(name="PRODUCT_ATTRIBUTE_REQUIRED")
 	private boolean attributeRequired=false;
-	
-	/**
-	 * a read only attribute is considered as a core attribute addition
-	 */
-	@Column(name="PRODUCT_ATTRIBUTE_FOR_DISP")
-	private boolean attributeDisplayOnly=false;
-	
-
-	@Column(name="PRODUCT_ATTRIBUTE_DISCOUNTED")
-	private boolean attributeDiscounted=false;
 	
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -79,38 +58,7 @@ public class ProductAttribute extends SalesManagerEntity<Long, ProductAttribute>
 	@JoinColumn(name="OPTION_VALUE_ID", nullable=false)
 	private ProductOptionValue productOptionValue;
 	
-	
-	/**
-	 * This transient object property
-	 * is a utility used only to submit from a free text
-	 */
-	@Transient
-	private String attributePrice = "0";
-	
-	
-	/**
-	 * This transient object property
-	 * is a utility used only to submit from a free text
-	 */
-	@Transient
-	private String attributeSortOrder = "0";
-	
 
-
-	/**
-	 * This transient object property
-	 * is a utility used only to submit from a free text
-	 */
-	@Transient
-	private String attributeAdditionalWeight = "0";
-	
-	public String getAttributePrice() {
-		return attributePrice;
-	}
-
-	public void setAttributePrice(String attributePrice) {
-		this.attributePrice = attributePrice;
-	}
 
 	@ManyToOne(targetEntity = Product.class)
 	@JoinColumn(name = "PRODUCT_ID", nullable = false)
@@ -139,29 +87,6 @@ public class ProductAttribute extends SalesManagerEntity<Long, ProductAttribute>
 		this.productOptionSortOrder = productOptionSortOrder;
 	}
 
-	public boolean getProductAttributeIsFree() {
-		return productAttributeIsFree;
-	}
-
-	public void setProductAttributeIsFree(boolean productAttributeIsFree) {
-		this.productAttributeIsFree = productAttributeIsFree;
-	}
-
-	public BigDecimal getProductAttributeWeight() {
-		return productAttributeWeight;
-	}
-
-	public void setProductAttributeWeight(BigDecimal productAttributeWeight) {
-		this.productAttributeWeight = productAttributeWeight;
-	}
-
-	public boolean getAttributeDefault() {
-		return attributeDefault;
-	}
-
-	public void setAttributeDefault(boolean attributeDefault) {
-		this.attributeDefault = attributeDefault;
-	}
 
 	public boolean getAttributeRequired() {
 		return attributeRequired;
@@ -171,21 +96,7 @@ public class ProductAttribute extends SalesManagerEntity<Long, ProductAttribute>
 		this.attributeRequired = attributeRequired;
 	}
 
-	public boolean getAttributeDisplayOnly() {
-		return attributeDisplayOnly;
-	}
 
-	public void setAttributeDisplayOnly(boolean attributeDisplayOnly) {
-		this.attributeDisplayOnly = attributeDisplayOnly;
-	}
-
-	public boolean getAttributeDiscounted() {
-		return attributeDiscounted;
-	}
-
-	public void setAttributeDiscounted(boolean attributeDiscounted) {
-		this.attributeDiscounted = attributeDiscounted;
-	}
 
 	public ProductOption getProductOption() {
 		return productOption;
@@ -212,30 +123,6 @@ public class ProductAttribute extends SalesManagerEntity<Long, ProductAttribute>
 	}
 	
 	
-	public String getAttributeSortOrder() {
-		return attributeSortOrder;
-	}
-
-	public void setAttributeSortOrder(String attributeSortOrder) {
-		this.attributeSortOrder = attributeSortOrder;
-	}
-
-	public String getAttributeAdditionalWeight() {
-		return attributeAdditionalWeight;
-	}
-
-	public void setAttributeAdditionalWeight(String attributeAdditionalWeight) {
-		this.attributeAdditionalWeight = attributeAdditionalWeight;
-	}
-	
-	public BigDecimal getProductAttributePrice() {
-		return productAttributePrice;
-	}
-
-	public void setProductAttributePrice(BigDecimal productAttributePrice) {
-		this.productAttributePrice = productAttributePrice;
-	}
-
 
 
 }

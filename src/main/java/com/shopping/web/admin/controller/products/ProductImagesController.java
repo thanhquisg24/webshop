@@ -86,4 +86,24 @@ public class ProductImagesController {
 		return new JsonResponse<ProductImage>(result)  ;
 		
 	}
+	@GetMapping("/admin/product-image/get1")
+	@ResponseBody
+	public JsonResponse<ProductImage> listImageByproductIDpost(@RequestParam("productId") Long id) throws ServiceException{
+		List<ProductImage> result=productImageService.getProductImages(id);
+		if(result==null){
+			result=new ArrayList<ProductImage>();
+		}
+		return new JsonResponse<ProductImage>(result)  ;
+		
+	}
+	@PostMapping("/admin/product-image/ProductPictureDelete")
+	@ResponseBody
+	public  ResponseEntity<GenericResponse> deleteImage(@RequestParam("id")Long imageId) throws ServiceException, IOException{
+		
+		ProductImage product_image=productImageService.getImage(imageId);
+		productImageService.removeProductImage(product_image);
+		return new ResponseEntity<GenericResponse>(new GenericResponse("success"), HttpStatus.OK);
+		
+	}
+	
 }

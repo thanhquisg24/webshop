@@ -99,6 +99,14 @@ public class ProductOptionServiceImpl  implements ProductOptionService {
 		// TODO Auto-generated method stub
 		 return productOptionRepository.findAll(option_name,pageRequest);
 	}
+
+
+
+	@Override
+	public List<ProductOption> listAll() {
+		// TODO Auto-generated method stub
+		 return productOptionRepository.findAll();
+	}
 	
 
 	

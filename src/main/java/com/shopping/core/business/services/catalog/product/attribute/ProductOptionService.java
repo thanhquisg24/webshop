@@ -4,7 +4,6 @@ package com.shopping.core.business.services.catalog.product.attribute;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import com.shopping.core.business.exception.ServiceException;
@@ -32,6 +31,8 @@ public interface ProductOptionService {
 
 
 	Page<ProductOption> findAll(String option_name, Pageable pageRequest);
+
+	List<ProductOption> listAll();
 
 
 	

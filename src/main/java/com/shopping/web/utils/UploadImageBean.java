@@ -97,9 +97,11 @@ public class UploadImageBean {
 		
 	    File imageSource= new File(productImageDirectory + image_name);
 		File imageCopyTo= new File(productImage_deleteDirectory + image_name);
-		this.copyTo(imageSource,imageCopyTo);
-		this.deleteFile(imageSource);
-		
+		if(imageSource.exists()){
+			this.copyTo(imageSource,imageCopyTo);
+			this.deleteFile(imageSource);
+		}
+
 	}
 	
 	

@@ -16,9 +16,13 @@ public interface ProductAttributeService  {
 
 	List<ProductAttribute> getByOptionValueId(Long id) throws ServiceException;
 
-	List<ProductAttribute> getByProductId( Product product)
-			throws ServiceException;
 
 	List<ProductAttribute> getByAttributeIds( Product product, List<Long> ids)
 			throws ServiceException;
+
+	List<ProductAttribute> getByProductId(Long productId) throws ServiceException;
+
+	ProductAttribute getById(Long id);
+
+	void delete(ProductAttribute attribute) throws ServiceException;
 }
